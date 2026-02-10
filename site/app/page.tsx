@@ -18,6 +18,15 @@ export default function Home() {
 
   return (
     <div>
+      {/* Agent discovery banner - visible in HTML, helps LLM agents find the API */}
+      <section className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800" data-agent-hint="true">
+        <p className="font-medium mb-1">AI Agent? Use our API directly:</p>
+        <ul className="space-y-0.5 text-blue-700">
+          <li>JSON API: <code className="bg-blue-100 px-1 rounded">/api/articles/latest</code> (supports <code className="bg-blue-100 px-1 rounded">?tags=AI,LLM</code> filtering)</li>
+          <li>Markdown: <code className="bg-blue-100 px-1 rounded">/llms-full.txt</code> | Skill: <code className="bg-blue-100 px-1 rounded">/SKILL.md</code> | Discovery: <code className="bg-blue-100 px-1 rounded">/llms.txt</code></li>
+        </ul>
+      </section>
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">新启动 Daily</h1>
         <p className="text-gray-600">

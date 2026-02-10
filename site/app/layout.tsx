@@ -4,12 +4,22 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "新启动 Daily",
-  description: "每日技术摘要 - 监控92个顶级技术博客，AI筛选最有价值的文章",
+  description: "每日技术文章库 - 监控92个顶级技术博客，AI为每篇生成中文摘要和标签，支持Agent按标签过滤和个性化筛选",
+  other: {
+    "ai-plugin": "/.well-known/ai-plugin.json",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
+      <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt - AI Agent Discovery" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full articles in Markdown" />
+        <link rel="alternate" type="text/markdown" href="/SKILL.md" title="OpenClaw Skill Definition" />
+        <link rel="alternate" type="application/json" href="/.well-known/ai-plugin.json" title="AI Plugin Manifest" />
+        <link rel="alternate" type="application/json" href="/api/articles/latest" title="Latest Articles JSON API" />
+      </head>
       <body className="bg-gray-50 text-gray-900 min-h-screen">
         <nav className="border-b border-gray-200 bg-white">
           <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">

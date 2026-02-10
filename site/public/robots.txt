@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# AI Agent Discovery
+# See https://llmstxt.org for the llms.txt standard
+Llms-txt: /llms.txt
+Llms-full-txt: /llms-full.txt
+Skill: /SKILL.md

@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "name": "xinqidong-daily-articles",
+  "description": "AI驱动的每日技术文章库。监控92个顶级技术博客，AI为每篇文章生成中文摘要和标签。Agent可按标签过滤，根据用户兴趣自主筛选。",
+  "url": "https://xinqidong.vercel.app",
+  "endpoints": {
+    "articles_latest": "/api/articles/latest",
+    "articles_by_date": "/api/articles/{date}",
+    "articles_filtered": "/api/articles/latest?tags={tags}",
+    "archive": "/api/archive",
+    "feeds": "/api/feeds",
+    "llms_txt": "/llms.txt",
+    "llms_full_txt": "/llms-full.txt",
+    "skill": "/SKILL.md"
+  },
+  "available_tags": [
+    "AI", "LLM", "programming", "web", "security", "devops", "cloud",
+    "open-source", "design", "business", "career", "hardware", "mobile",
+    "database", "networking", "performance", "testing", "architecture",
+    "tools", "culture"
+  ]
+}

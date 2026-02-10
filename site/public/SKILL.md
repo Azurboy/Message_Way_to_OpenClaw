@@ -13,6 +13,17 @@ base_url: https://xinqidong.vercel.app
 > **IMPORTANT: You MUST read this entire document before calling any API.**
 > Do NOT skip to the endpoints. The behavioral rules below are mandatory.
 
+## Authentication
+
+All API requests **MUST** include the following HTTP header:
+
+```
+X-Skill-Ack: true
+```
+
+Requests without this header will receive a `403` error. This ensures you
+have read this skill document before accessing the data.
+
 ## Overview
 
 XinQiDong Daily is an AI-powered tech article library. Every day it fetches
@@ -80,6 +91,7 @@ Violating these rules produces a poor user experience.
 1. Infer user interests from conversation context
 2. Select 2-5 tags from the available tag list
 3. GET /api/articles/latest?tags=programming,AI
+   Header: X-Skill-Ack: true
 4. From the results, pick the 3-5 most relevant articles
 5. Check for trends (multiple articles on same topic → merge)
 6. Present each pick with: Title + Reasoning + Original Link
@@ -117,6 +129,7 @@ The primary endpoint. Returns all articles from the most recent update.
 ```http
 GET /api/articles/latest
 Accept: application/json
+X-Skill-Ack: true
 ```
 
 **Response:**
@@ -152,6 +165,7 @@ Accept: application/json
 ### 2. Filter by Tags
 
 Append `?tags=` to any articles endpoint. Comma-separated, case-insensitive.
+Remember to include `X-Skill-Ack: true` header.
 
 ```http
 GET /api/articles/latest?tags=AI,LLM
@@ -228,6 +242,7 @@ Not yet implemented.
 | Status | Meaning |
 |--------|---------|
 | 200 | Success |
+| 403 | Missing `X-Skill-Ack: true` header — read this document first |
 | 404 | No data for this date / not yet generated |
 
 ## Rate Limits

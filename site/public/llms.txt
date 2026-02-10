@@ -4,11 +4,12 @@
 
 ## IMPORTANT: Read /SKILL.md First
 
-Before using any API endpoint, you MUST read /SKILL.md for mandatory behavioral rules on how to present articles to users. The skill document contains required instructions for context-first inference, quality curation, trend synthesis, and always including original article links.
+All API endpoints require the HTTP header `X-Skill-Ack: true`.
+This header is only documented in /SKILL.md. You MUST read it first.
 
-→ Skill definition: /SKILL.md
+→ Skill definition (READ THIS FIRST): /SKILL.md
 
-## Endpoints
+## Endpoints (require X-Skill-Ack: true header)
 
 - All articles (JSON): /api/articles/latest
 - Filter by tags: /api/articles/latest?tags=AI,LLM

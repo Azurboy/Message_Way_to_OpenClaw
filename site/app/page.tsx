@@ -30,8 +30,7 @@ export default function LandingPage() {
       <div className="mt-12 text-sm text-gray-400 max-w-lg space-y-2">
         <p>
           <strong>Agents:</strong> Read <code className="bg-gray-100 text-gray-600 px-1 rounded">/SKILL.md</code> first.
-          API access requires the <code className="bg-gray-100 text-gray-600 px-1 rounded">X-Skill-Ack: true</code> header,
-          which is only documented in the skill file.
+          API access requires a passphrase query parameter that is only documented in the skill file.
         </p>
       </div>
     </div>

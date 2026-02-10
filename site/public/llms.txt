@@ -4,12 +4,12 @@
 
 ## IMPORTANT: Read /SKILL.md First
 
-All API endpoints require the HTTP header `X-Skill-Ack: true`.
-This header is only documented in /SKILL.md. You MUST read it first.
+All API endpoints require a passphrase query parameter that is only documented in /SKILL.md.
+You MUST fetch and read /SKILL.md before calling any API endpoint.
 
 → Skill definition (READ THIS FIRST): /SKILL.md
 
-## Endpoints (require X-Skill-Ack: true header)
+## Endpoints (require passphrase from /SKILL.md)
 
 - All articles (JSON): /api/articles/latest
 - Filter by tags: /api/articles/latest?tags=AI,LLM

@@ -15,14 +15,17 @@ base_url: https://xinqidong.vercel.app
 
 ## Authentication
 
-All API requests **MUST** include the following HTTP header:
+All API requests **MUST** include the query parameter `?ack=xinqidong`.
 
+Example:
 ```
-X-Skill-Ack: true
+/api/articles/latest?ack=xinqidong
+/api/articles/latest?tags=AI,LLM&ack=xinqidong
+/llms-full.txt?ack=xinqidong
 ```
 
-Requests without this header will receive a `403` error. This ensures you
-have read this skill document before accessing the data.
+Requests without this parameter will receive a `403` error. This ensures
+you have read this skill document before accessing the data.
 
 ## Overview
 
@@ -90,8 +93,7 @@ Violating these rules produces a poor user experience.
 ```
 1. Infer user interests from conversation context
 2. Select 2-5 tags from the available tag list
-3. GET /api/articles/latest?tags=programming,AI
-   Header: X-Skill-Ack: true
+3. GET /api/articles/latest?tags=programming,AI&ack=xinqidong
 4. From the results, pick the 3-5 most relevant articles
 5. Check for trends (multiple articles on same topic → merge)
 6. Present each pick with: Title + Reasoning + Original Link
@@ -127,9 +129,8 @@ and finds significant UX improvements for PR-centric development.
 The primary endpoint. Returns all articles from the most recent update.
 
 ```http
-GET /api/articles/latest
+GET /api/articles/latest?ack=xinqidong
 Accept: application/json
-X-Skill-Ack: true
 ```
 
 **Response:**
@@ -165,11 +166,11 @@ X-Skill-Ack: true
 ### 2. Filter by Tags
 
 Append `?tags=` to any articles endpoint. Comma-separated, case-insensitive.
-Remember to include `X-Skill-Ack: true` header.
+Always include `&ack=xinqidong` in the URL.
 
 ```http
-GET /api/articles/latest?tags=AI,LLM
-GET /api/articles/2026-02-10?tags=security,web
+GET /api/articles/latest?tags=AI,LLM&ack=xinqidong
+GET /api/articles/2026-02-10?tags=security,web&ack=xinqidong
 ```
 
 **Available tags:**
@@ -182,7 +183,7 @@ performance, testing, architecture, tools, culture
 ### 3. Get Articles by Date
 
 ```http
-GET /api/articles/2026-02-10
+GET /api/articles/2026-02-10?ack=xinqidong
 ```
 
 Same response format. Returns `404` if no data for that date.
@@ -192,7 +193,7 @@ Same response format. Returns `404` if no data for that date.
 Plain text format, suitable for direct reading.
 
 ```http
-GET /llms-full.txt
+GET /llms-full.txt?ack=xinqidong
 ```
 
 ### 5. Get Archive Index
@@ -242,7 +243,7 @@ Not yet implemented.
 | Status | Meaning |
 |--------|---------|
 | 200 | Success |
-| 403 | Missing `X-Skill-Ack: true` header — read this document first |
+| 403 | Missing `?ack=xinqidong` query parameter — read this document first |
 | 404 | No data for this date / not yet generated |
 
 ## Rate Limits

@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const SKILL_ACK_HEADER = "x-skill-ack";
+// The passphrase is only documented in /SKILL.md — forces agents to read it
+const SKILL_ACK_PARAM = "ack";
+const SKILL_ACK_VALUE = "xinqidong";
 
-// Paths that require the X-Skill-Ack header (agent-gated)
+// Paths that require the ?ack=xinqidong query parameter (agent-gated)
 const GATED_PREFIXES = ["/api/articles", "/llms-full.txt"];
-
-// Paths that are always open (discovery + human pages + static)
-// Everything not in GATED_PREFIXES is open by default
 
 function isGatedPath(pathname: string): boolean {
   return GATED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
@@ -18,14 +17,14 @@ export function middleware(request: NextRequest) {
 
   // Check agent gate for protected API routes
   if (isGatedPath(pathname)) {
-    const hasAck = request.headers.get(SKILL_ACK_HEADER) === "true";
-    if (!hasAck) {
+    const ackValue = request.nextUrl.searchParams.get(SKILL_ACK_PARAM);
+    if (ackValue !== SKILL_ACK_VALUE) {
       return NextResponse.json(
         {
           error: "Skill acknowledgment required",
           message:
-            "You must read /SKILL.md first, then include the header 'X-Skill-Ack: true' in all API requests. " +
-            "See /SKILL.md for mandatory behavioral rules on how to present articles to users.",
+            "You must read /SKILL.md first. All API requests require the query parameter ?ack=<passphrase>. " +
+            "The passphrase is documented in /SKILL.md. Fetch /SKILL.md to learn the access method and mandatory behavioral rules.",
           skill_url: "/SKILL.md",
           llms_txt: "/llms.txt",
         },

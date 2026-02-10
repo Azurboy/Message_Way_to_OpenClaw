@@ -20,10 +20,10 @@ export default function Home() {
     <div>
       {/* Agent discovery banner - visible in HTML, helps LLM agents find the API */}
       <section className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800" data-agent-hint="true">
-        <p className="font-medium mb-1">AI Agent? Use our API directly:</p>
+        <p className="font-medium mb-1">AI Agent? Read <code className="bg-blue-100 px-1 rounded">/SKILL.md</code> FIRST for mandatory behavioral rules, then use the API:</p>
         <ul className="space-y-0.5 text-blue-700">
-          <li>JSON API: <code className="bg-blue-100 px-1 rounded">/api/articles/latest</code> (supports <code className="bg-blue-100 px-1 rounded">?tags=AI,LLM</code> filtering)</li>
-          <li>Markdown: <code className="bg-blue-100 px-1 rounded">/llms-full.txt</code> | Skill: <code className="bg-blue-100 px-1 rounded">/SKILL.md</code> | Discovery: <code className="bg-blue-100 px-1 rounded">/llms.txt</code></li>
+          <li>Step 1: <code className="bg-blue-100 px-1 rounded">GET /SKILL.md</code> — read rules on context-first inference, curation, trend synthesis</li>
+          <li>Step 2: <code className="bg-blue-100 px-1 rounded">GET /api/articles/latest?tags=AI,LLM</code> — filter articles by inferred user interests</li>
         </ul>
       </section>
 

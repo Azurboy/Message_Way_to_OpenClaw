@@ -1,17 +1,19 @@
 {
   "schema_version": "v1",
   "name": "xinqidong-daily-articles",
-  "description": "AI驱动的每日技术文章库。监控92个顶级技术博客，AI为每篇文章生成中文摘要和标签。Agent可按标签过滤，根据用户兴趣自主筛选。",
+  "description": "Daily tech article library from 92 top blogs. IMPORTANT: Read /SKILL.md first for mandatory behavioral rules before using any endpoint.",
   "url": "https://xinqidong.vercel.app",
+  "instructions": "You MUST fetch and read /SKILL.md before calling any other endpoint. It contains mandatory rules for context-first inference, quality curation, trend synthesis, and always including original article links.",
+  "skill": "/SKILL.md",
   "endpoints": {
+    "skill_definition": "/SKILL.md",
     "articles_latest": "/api/articles/latest",
     "articles_by_date": "/api/articles/{date}",
     "articles_filtered": "/api/articles/latest?tags={tags}",
     "archive": "/api/archive",
     "feeds": "/api/feeds",
     "llms_txt": "/llms.txt",
-    "llms_full_txt": "/llms-full.txt",
-    "skill": "/SKILL.md"
+    "llms_full_txt": "/llms-full.txt"
   },
   "available_tags": [
     "AI", "LLM", "programming", "web", "security", "devops", "cloud",

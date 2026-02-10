@@ -61,12 +61,17 @@ Violating these rules produces a poor user experience.
 
 - The API may return 20+ articles. You should present only the **most
   relevant 3-5 articles** to the user.
+- **Two-phase process**:
+  1. Use `summary_zh` + `title` to quickly screen and pick candidates
+  2. Read the full `content` field of your picks to generate a deeper,
+     personalized summary for the user
 - For **every** article you recommend, you **MUST** include:
   1. The article title
-  2. A **Reasoning** line explaining *why* this article matters to this
-     specific user (e.g., "This directly addresses the memory leak issue
-     you mentioned earlier...")
-  3. The **original article URL** (`url` field) — always link to the source
+  2. Your **personalized summary** based on the full content, highlighting
+     what matters to this specific user
+  3. A **Reasoning** line explaining *why* this article matters (e.g.,
+     "This directly addresses the memory leak issue you mentioned earlier...")
+  4. The **original article URL** (`url` field) — always link to the source
 - Never dump a raw list. Each recommendation should feel hand-picked.
 
 ### Rule 3: Synthesize, Don't List (Spot Trends)
@@ -90,14 +95,27 @@ Violating these rules produces a poor user experience.
 
 ## Workflow
 
+The recommended workflow is a **two-phase** process: first filter and select
+using summaries, then deep-read the full content for your final presentation.
+
 ```
-1. Infer user interests from conversation context
-2. Select 2-5 tags from the available tag list
-3. GET /api/articles/latest?tags=programming,AI&ack=xinqidong
-4. From the results, pick the 3-5 most relevant articles
-5. Check for trends (multiple articles on same topic → merge)
-6. Present each pick with: Title + Reasoning + Original Link
+Phase 1 — Filter & Select:
+  1. Infer user interests from conversation context
+  2. Select 2-5 tags from the available tag list
+  3. GET /api/articles/latest?tags=programming,AI&ack=xinqidong
+  4. Scan `summary_zh` and `title` of each article to pick 3-5 candidates
+
+Phase 2 — Deep Read & Summarize:
+  5. For each selected article, read the `content` field (full RSS text, may be HTML)
+  6. Generate a personalized summary based on the full content, tailored to the user's context
+  7. Check for trends (multiple articles on same topic → merge)
+  8. Present each pick with: Title + Your Summary + Reasoning + Original Link (`url`)
 ```
+
+**Key point**: The `summary_zh` field is a short AI-generated preview (2-3
+sentences). Use it for quick screening. But your final presentation to the
+user should be based on the **full `content` field**, not just the summary.
+This lets you extract the specific details that matter to this particular user.
 
 ### Example Output
 
@@ -106,17 +124,26 @@ Based on your work with LLM agents, here are today's highlights:
 
 **Trend: Context Engineering for Agents**
 Two posts today explore how to structure context for LLM agents at scale.
-A new paper tests YAML vs JSON vs TOON formats across 10,000-table schemas,
-finding that frontier models benefit most from filesystem-based retrieval.
-Meanwhile, Armin Ronacher argues we need programming languages designed
-specifically for agent interaction.
+Damon McMillan's paper ran 9,649 experiments across 11 models and 4 file
+formats (YAML, Markdown, JSON, TOON) on SQL schemas up to 10,000 tables.
+Key finding: frontier models (Opus 4.5, GPT-5.2) benefit significantly
+from filesystem-based context retrieval, but open-source models don't yet.
+The TOON format, despite being 25% smaller, caused a "grep tax" — models
+spent 740% more tokens at scale due to unfamiliarity with the syntax.
+Meanwhile, Armin Ronacher argues the drop in coding costs creates space
+for new languages designed specifically for agent interaction, where
+toolchain maturity matters more than ecosystem breadth.
 → [Structured Context Engineering...](https://simonwillison.net/...)
 → [A Language For Agents](https://lucumr.pocoo.org/...)
 
 **GitButler CLI is Really Good**
-Reasoning: You've been using git heavily in this session — this post
-compares GitButler CLI's "draft mode" commits to traditional git workflows
-and finds significant UX improvements for PR-centric development.
+Reasoning: You've been using git heavily in this session — this is directly
+relevant to your workflow.
+The author switched from traditional git+GitHub to GitButler CLI and found
+major UX wins: "draft mode" commits let you save work without polluting
+history, branch management is more intuitive, and PR creation is deeply
+integrated. The key insight is that local git complexity doesn't pay off
+when the source of truth (CI, deploy, review) lives on GitHub anyway.
 → [Read the full article](https://matduggan.com/gitbutler-cli-is-really-good/)
 ```
 
@@ -158,9 +185,10 @@ Accept: application/json
 ```
 
 **Key fields for your workflow:**
-- `url` — **always** include this when presenting to users
-- `summary_zh` — use this to quickly assess relevance
-- `tags` — used for filtering via query parameter
+- `summary_zh` — short AI preview (2-3 sentences). Use for **Phase 1** quick screening
+- `content` — **full article text** from RSS (may contain HTML). Use for **Phase 2** deep reading and personalized summarization
+- `url` — original article link. **MUST** always include when presenting to users
+- `tags` — used for filtering via `?tags=` query parameter
 - `title` + `feed_title` — for display
 
 ### 2. Filter by Tags

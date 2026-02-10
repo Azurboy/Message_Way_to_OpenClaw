@@ -1,0 +1,558 @@
+{
+  "count": 92,
+  "updated_at": "2026-02-10",
+  "feeds": [
+    {
+      "title": "simonwillison.net",
+      "xml_url": "https://simonwillison.net/atom/everything/",
+      "html_url": "https://simonwillison.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "jeffgeerling.com",
+      "xml_url": "https://www.jeffgeerling.com/blog.xml",
+      "html_url": "https://jeffgeerling.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "seangoedecke.com",
+      "xml_url": "https://www.seangoedecke.com/rss.xml",
+      "html_url": "https://seangoedecke.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "krebsonsecurity.com",
+      "xml_url": "https://krebsonsecurity.com/feed/",
+      "html_url": "https://krebsonsecurity.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "daringfireball.net",
+      "xml_url": "https://daringfireball.net/feeds/main",
+      "html_url": "https://daringfireball.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "ericmigi.com",
+      "xml_url": "https://ericmigi.com/rss.xml",
+      "html_url": "https://ericmigi.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "antirez.com",
+      "xml_url": "http://antirez.com/rss",
+      "html_url": "http://antirez.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "idiallo.com",
+      "xml_url": "https://idiallo.com/feed.rss",
+      "html_url": "https://idiallo.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "maurycyz.com",
+      "xml_url": "https://maurycyz.com/index.xml",
+      "html_url": "https://maurycyz.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "pluralistic.net",
+      "xml_url": "https://pluralistic.net/feed/",
+      "html_url": "https://pluralistic.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "shkspr.mobi",
+      "xml_url": "https://shkspr.mobi/blog/feed/",
+      "html_url": "https://shkspr.mobi",
+      "category": "Blogs"
+    },
+    {
+      "title": "lcamtuf.substack.com",
+      "xml_url": "https://lcamtuf.substack.com/feed",
+      "html_url": "https://lcamtuf.substack.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "mitchellh.com",
+      "xml_url": "https://mitchellh.com/feed.xml",
+      "html_url": "https://mitchellh.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "dynomight.net",
+      "xml_url": "https://dynomight.net/feed.xml",
+      "html_url": "https://dynomight.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "utcc.utoronto.ca/~cks",
+      "xml_url": "https://utcc.utoronto.ca/~cks/space/blog/?atom",
+      "html_url": "https://utcc.utoronto.ca/~cks",
+      "category": "Blogs"
+    },
+    {
+      "title": "xeiaso.net",
+      "xml_url": "https://xeiaso.net/blog.rss",
+      "html_url": "https://xeiaso.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "devblogs.microsoft.com/oldnewthing",
+      "xml_url": "https://devblogs.microsoft.com/oldnewthing/feed",
+      "html_url": "https://devblogs.microsoft.com/oldnewthing",
+      "category": "Blogs"
+    },
+    {
+      "title": "righto.com",
+      "xml_url": "https://www.righto.com/feeds/posts/default",
+      "html_url": "https://righto.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "lucumr.pocoo.org",
+      "xml_url": "https://lucumr.pocoo.org/feed.atom",
+      "html_url": "https://lucumr.pocoo.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "skyfall.dev",
+      "xml_url": "https://skyfall.dev/rss.xml",
+      "html_url": "https://skyfall.dev",
+      "category": "Blogs"
+    },
+    {
+      "title": "garymarcus.substack.com",
+      "xml_url": "https://garymarcus.substack.com/feed",
+      "html_url": "https://garymarcus.substack.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "rachelbythebay.com",
+      "xml_url": "https://rachelbythebay.com/w/atom.xml",
+      "html_url": "https://rachelbythebay.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "overreacted.io",
+      "xml_url": "https://overreacted.io/rss.xml",
+      "html_url": "https://overreacted.io",
+      "category": "Blogs"
+    },
+    {
+      "title": "timsh.org",
+      "xml_url": "https://timsh.org/rss/",
+      "html_url": "https://timsh.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "johndcook.com",
+      "xml_url": "https://www.johndcook.com/blog/feed/",
+      "html_url": "https://johndcook.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "gilesthomas.com",
+      "xml_url": "https://gilesthomas.com/feed/rss.xml",
+      "html_url": "https://gilesthomas.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "matklad.github.io",
+      "xml_url": "https://matklad.github.io/feed.xml",
+      "html_url": "https://matklad.github.io",
+      "category": "Blogs"
+    },
+    {
+      "title": "derekthompson.org",
+      "xml_url": "https://www.theatlantic.com/feed/author/derek-thompson/",
+      "html_url": "https://derekthompson.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "evanhahn.com",
+      "xml_url": "https://evanhahn.com/feed.xml",
+      "html_url": "https://evanhahn.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "terriblesoftware.org",
+      "xml_url": "https://terriblesoftware.org/feed/",
+      "html_url": "https://terriblesoftware.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "rakhim.exotext.com",
+      "xml_url": "https://rakhim.exotext.com/rss.xml",
+      "html_url": "https://rakhim.exotext.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "joanwestenberg.com",
+      "xml_url": "https://joanwestenberg.com/rss",
+      "html_url": "https://joanwestenberg.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "xania.org",
+      "xml_url": "https://xania.org/feed",
+      "html_url": "https://xania.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "micahflee.com",
+      "xml_url": "https://micahflee.com/feed/",
+      "html_url": "https://micahflee.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "nesbitt.io",
+      "xml_url": "https://nesbitt.io/feed.xml",
+      "html_url": "https://nesbitt.io",
+      "category": "Blogs"
+    },
+    {
+      "title": "construction-physics.com",
+      "xml_url": "https://www.construction-physics.com/feed",
+      "html_url": "https://construction-physics.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "tedium.co",
+      "xml_url": "https://feed.tedium.co/",
+      "html_url": "https://tedium.co",
+      "category": "Blogs"
+    },
+    {
+      "title": "susam.net",
+      "xml_url": "https://susam.net/feed.xml",
+      "html_url": "https://susam.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "entropicthoughts.com",
+      "xml_url": "https://entropicthoughts.com/feed.xml",
+      "html_url": "https://entropicthoughts.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "buttondown.com/hillelwayne",
+      "xml_url": "https://buttondown.com/hillelwayne/rss",
+      "html_url": "https://buttondown.com/hillelwayne",
+      "category": "Blogs"
+    },
+    {
+      "title": "dwarkesh.com",
+      "xml_url": "https://www.dwarkeshpatel.com/feed",
+      "html_url": "https://dwarkesh.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "borretti.me",
+      "xml_url": "https://borretti.me/feed.xml",
+      "html_url": "https://borretti.me",
+      "category": "Blogs"
+    },
+    {
+      "title": "wheresyoured.at",
+      "xml_url": "https://www.wheresyoured.at/rss/",
+      "html_url": "https://wheresyoured.at",
+      "category": "Blogs"
+    },
+    {
+      "title": "jayd.ml",
+      "xml_url": "https://jayd.ml/feed.xml",
+      "html_url": "https://jayd.ml",
+      "category": "Blogs"
+    },
+    {
+      "title": "minimaxir.com",
+      "xml_url": "https://minimaxir.com/index.xml",
+      "html_url": "https://minimaxir.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "geohot.github.io",
+      "xml_url": "https://geohot.github.io/blog/feed.xml",
+      "html_url": "https://geohot.github.io",
+      "category": "Blogs"
+    },
+    {
+      "title": "paulgraham.com",
+      "xml_url": "http://www.aaronsw.com/2002/feeds/pgessays.rss",
+      "html_url": "https://paulgraham.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "filfre.net",
+      "xml_url": "https://www.filfre.net/feed/",
+      "html_url": "https://filfre.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "blog.jim-nielsen.com",
+      "xml_url": "https://blog.jim-nielsen.com/feed.xml",
+      "html_url": "https://blog.jim-nielsen.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "dfarq.homeip.net",
+      "xml_url": "https://dfarq.homeip.net/feed/",
+      "html_url": "https://dfarq.homeip.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "jyn.dev",
+      "xml_url": "https://jyn.dev/atom.xml",
+      "html_url": "https://jyn.dev",
+      "category": "Blogs"
+    },
+    {
+      "title": "geoffreylitt.com",
+      "xml_url": "https://www.geoffreylitt.com/feed.xml",
+      "html_url": "https://geoffreylitt.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "downtowndougbrown.com",
+      "xml_url": "https://www.downtowndougbrown.com/feed/",
+      "html_url": "https://downtowndougbrown.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "brutecat.com",
+      "xml_url": "https://brutecat.com/rss.xml",
+      "html_url": "https://brutecat.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "eli.thegreenplace.net",
+      "xml_url": "https://eli.thegreenplace.net/feeds/all.atom.xml",
+      "html_url": "https://eli.thegreenplace.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "abortretry.fail",
+      "xml_url": "https://www.abortretry.fail/feed",
+      "html_url": "https://abortretry.fail",
+      "category": "Blogs"
+    },
+    {
+      "title": "fabiensanglard.net",
+      "xml_url": "https://fabiensanglard.net/rss.xml",
+      "html_url": "https://fabiensanglard.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "oldvcr.blogspot.com",
+      "xml_url": "https://oldvcr.blogspot.com/feeds/posts/default",
+      "html_url": "https://oldvcr.blogspot.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "bogdanthegeek.github.io",
+      "xml_url": "https://bogdanthegeek.github.io/blog/index.xml",
+      "html_url": "https://bogdanthegeek.github.io",
+      "category": "Blogs"
+    },
+    {
+      "title": "hugotunius.se",
+      "xml_url": "https://hugotunius.se/feed.xml",
+      "html_url": "https://hugotunius.se",
+      "category": "Blogs"
+    },
+    {
+      "title": "gwern.net",
+      "xml_url": "https://gwern.substack.com/feed",
+      "html_url": "https://gwern.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "berthub.eu",
+      "xml_url": "https://berthub.eu/articles/index.xml",
+      "html_url": "https://berthub.eu",
+      "category": "Blogs"
+    },
+    {
+      "title": "chadnauseam.com",
+      "xml_url": "https://chadnauseam.com/rss.xml",
+      "html_url": "https://chadnauseam.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "simone.org",
+      "xml_url": "https://simone.org/feed/",
+      "html_url": "https://simone.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "it-notes.dragas.net",
+      "xml_url": "https://it-notes.dragas.net/feed/",
+      "html_url": "https://it-notes.dragas.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "beej.us",
+      "xml_url": "https://beej.us/blog/rss.xml",
+      "html_url": "https://beej.us",
+      "category": "Blogs"
+    },
+    {
+      "title": "hey.paris",
+      "xml_url": "https://hey.paris/index.xml",
+      "html_url": "https://hey.paris",
+      "category": "Blogs"
+    },
+    {
+      "title": "danielwirtz.com",
+      "xml_url": "https://danielwirtz.com/rss.xml",
+      "html_url": "https://danielwirtz.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "matduggan.com",
+      "xml_url": "https://matduggan.com/rss/",
+      "html_url": "https://matduggan.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "refactoringenglish.com",
+      "xml_url": "https://refactoringenglish.com/index.xml",
+      "html_url": "https://refactoringenglish.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "worksonmymachine.substack.com",
+      "xml_url": "https://worksonmymachine.substack.com/feed",
+      "html_url": "https://worksonmymachine.substack.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "philiplaine.com",
+      "xml_url": "https://philiplaine.com/index.xml",
+      "html_url": "https://philiplaine.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "steveblank.com",
+      "xml_url": "https://steveblank.com/feed/",
+      "html_url": "https://steveblank.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "bernsteinbear.com",
+      "xml_url": "https://bernsteinbear.com/feed.xml",
+      "html_url": "https://bernsteinbear.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "danieldelaney.net",
+      "xml_url": "https://danieldelaney.net/feed",
+      "html_url": "https://danieldelaney.net",
+      "category": "Blogs"
+    },
+    {
+      "title": "troyhunt.com",
+      "xml_url": "https://www.troyhunt.com/rss/",
+      "html_url": "https://troyhunt.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "herman.bearblog.dev",
+      "xml_url": "https://herman.bearblog.dev/feed/",
+      "html_url": "https://herman.bearblog.dev",
+      "category": "Blogs"
+    },
+    {
+      "title": "tomrenner.com",
+      "xml_url": "https://tomrenner.com/index.xml",
+      "html_url": "https://tomrenner.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "blog.pixelmelt.dev",
+      "xml_url": "https://blog.pixelmelt.dev/rss/",
+      "html_url": "https://blog.pixelmelt.dev",
+      "category": "Blogs"
+    },
+    {
+      "title": "martinalderson.com",
+      "xml_url": "https://martinalderson.com/feed.xml",
+      "html_url": "https://martinalderson.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "danielchasehooper.com",
+      "xml_url": "https://danielchasehooper.com/feed.xml",
+      "html_url": "https://danielchasehooper.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "chiark.greenend.org.uk/~sgtatham",
+      "xml_url": "https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/feed.xml",
+      "html_url": "https://chiark.greenend.org.uk/~sgtatham",
+      "category": "Blogs"
+    },
+    {
+      "title": "grantslatton.com",
+      "xml_url": "https://grantslatton.com/rss.xml",
+      "html_url": "https://grantslatton.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "experimental-history.com",
+      "xml_url": "https://www.experimental-history.com/feed",
+      "html_url": "https://experimental-history.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "anildash.com",
+      "xml_url": "https://anildash.com/feed.xml",
+      "html_url": "https://anildash.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "aresluna.org",
+      "xml_url": "https://aresluna.org/main.rss",
+      "html_url": "https://aresluna.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "michael.stapelberg.ch",
+      "xml_url": "https://michael.stapelberg.ch/feed.xml",
+      "html_url": "https://michael.stapelberg.ch",
+      "category": "Blogs"
+    },
+    {
+      "title": "miguelgrinberg.com",
+      "xml_url": "https://blog.miguelgrinberg.com/feed",
+      "html_url": "https://miguelgrinberg.com",
+      "category": "Blogs"
+    },
+    {
+      "title": "keygen.sh",
+      "xml_url": "https://keygen.sh/blog/feed.xml",
+      "html_url": "https://keygen.sh",
+      "category": "Blogs"
+    },
+    {
+      "title": "mjg59.dreamwidth.org",
+      "xml_url": "https://mjg59.dreamwidth.org/data/rss",
+      "html_url": "https://mjg59.dreamwidth.org",
+      "category": "Blogs"
+    },
+    {
+      "title": "computer.rip",
+      "xml_url": "https://computer.rip/rss.xml",
+      "html_url": "https://computer.rip",
+      "category": "Blogs"
+    },
+    {
+      "title": "tedunangst.com",
+      "xml_url": "https://www.tedunangst.com/flak/rss",
+      "html_url": "https://tedunangst.com",
+      "category": "Blogs"
+    }
+  ]
+}

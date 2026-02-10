@@ -1,80 +1,78 @@
-"""Generate static content files from digest data."""
+"""Generate static content files from articles data."""
 
 import json
 import logging
-from datetime import date
 from pathlib import Path
 
-from pipeline.config import CONTENT_DIR, DIGESTS_DIR
+from pipeline.config import CONTENT_DIR, ARTICLES_DIR
 
 logger = logging.getLogger(__name__)
 
 
-def generate_content(digest: dict, feeds: list[dict]):
-    """Write digest and feed data to site/content/.
+def generate_content(articles_data: dict, feeds: list[dict]):
+    """Write articles and feed data to site/content/.
 
     Creates:
-      - site/content/digests/{date}.json
-      - site/content/digests/{date}.md
-      - site/content/digests/latest.json
+      - site/content/articles/{date}.json
+      - site/content/articles/latest.json
       - site/content/feeds.json
       - site/content/index.json (archive index)
     """
-    digest_date = digest["date"]
+    articles_date = articles_data["date"]
 
-    # 1. Write digest JSON
-    digest_json_path = DIGESTS_DIR / f"{digest_date}.json"
-    _write_json(digest_json_path, digest)
-    logger.info(f"Wrote {digest_json_path}")
+    # 1. Write articles JSON
+    articles_json_path = ARTICLES_DIR / f"{articles_date}.json"
+    _write_json(articles_json_path, articles_data)
+    logger.info(f"Wrote {articles_json_path}")
 
-    # 2. Write digest markdown
-    digest_md_path = DIGESTS_DIR / f"{digest_date}.md"
-    md_content = f"# 新启动 Daily - {digest_date}\n\n{digest['summary_md']}"
-    digest_md_path.write_text(md_content, encoding="utf-8")
-    logger.info(f"Wrote {digest_md_path}")
-
-    # 3. Write latest.json (same content, easy access)
-    latest_path = DIGESTS_DIR / "latest.json"
-    _write_json(latest_path, digest)
+    # 2. Write latest.json (same content, easy access)
+    latest_path = ARTICLES_DIR / "latest.json"
+    _write_json(latest_path, articles_data)
     logger.info(f"Wrote {latest_path}")
 
-    # 4. Write feeds.json
+    # 3. Write feeds.json
     feeds_data = {
         "count": len(feeds),
-        "updated_at": digest_date,
+        "updated_at": articles_date,
         "feeds": feeds,
     }
     feeds_path = CONTENT_DIR / "feeds.json"
     _write_json(feeds_path, feeds_data)
     logger.info(f"Wrote {feeds_path}")
 
-    # 5. Update archive index
-    _update_index(digest_date, digest["post_count"], digest["top_count"])
+    # 4. Update archive index
+    _update_index(articles_date, articles_data["article_count"])
 
 
-def _update_index(digest_date: str, post_count: int, top_count: int):
+def _update_index(articles_date: str, article_count: int):
     """Update the archive index.json with a new entry."""
     index_path = CONTENT_DIR / "index.json"
     if index_path.exists():
         index = json.loads(index_path.read_text(encoding="utf-8"))
     else:
-        index = {"digests": []}
+        index = {"entries": []}
+
+    # Migrate old format if needed
+    if "digests" in index and "entries" not in index:
+        index["entries"] = index.pop("digests")
+
+    entries = index.get("entries", [])
 
     # Remove existing entry for same date
-    index["digests"] = [d for d in index["digests"] if d["date"] != digest_date]
+    entries = [e for e in entries if e.get("date") != articles_date]
 
     # Add new entry at the front
-    index["digests"].insert(0, {
-        "date": digest_date,
-        "post_count": post_count,
-        "top_count": top_count,
+    entries.insert(0, {
+        "date": articles_date,
+        "article_count": article_count,
     })
 
     # Keep sorted by date descending
-    index["digests"].sort(key=lambda d: d["date"], reverse=True)
+    entries.sort(key=lambda e: e["date"], reverse=True)
+    index["entries"] = entries
 
     _write_json(index_path, index)
-    logger.info(f"Updated archive index: {len(index['digests'])} entries")
+    logger.info(f"Updated archive index: {len(entries)} entries")
 
 
 def _write_json(path: Path, data: dict):

@@ -1,18 +1,35 @@
-"""AI summarizer using SiliconFlow API (OpenAI compatible) - stateless."""
+"""AI summarizer: batch-summarize articles with tags using SiliconFlow API."""
 
+import hashlib
 import json
 import logging
-import re
 from datetime import date, datetime, timezone, timedelta
 
 from openai import OpenAI
 
-from pipeline.config import SILICONFLOW_API_KEY, SILICONFLOW_MODEL, AI_SNIPPET_LENGTH, AI_TOP_N
+from pipeline.config import SILICONFLOW_API_KEY, SILICONFLOW_MODEL, AI_BATCH_SIZE
 
 logger = logging.getLogger(__name__)
 
-# Max posts to send to AI ranking (to stay within token limits)
-MAX_POSTS_FOR_RANKING = 200
+VALID_TAGS = [
+    "AI", "LLM", "programming", "web", "security", "devops", "cloud",
+    "open-source", "design", "business", "career", "hardware", "mobile",
+    "database", "networking", "performance", "testing", "architecture",
+    "tools", "culture",
+]
+
+BATCH_PROMPT_TEMPLATE = """请为以下 {count} 篇技术文章生成中文摘要和标签。
+
+要求：
+- summary_zh: 2-3句中文摘要，概括文章核心内容
+- tags: 2-5个标签，必须从以下词表中选择：
+  {tags}
+
+文章列表：
+{articles}
+
+请以JSON格式回复，不要包含其他内容：
+{{"articles": [{{"index": 1, "summary_zh": "...", "tags": ["AI", "LLM"]}}]}}"""
 
 
 def _get_client() -> OpenAI:
@@ -24,58 +41,9 @@ def _get_client() -> OpenAI:
     )
 
 
-def generate_digest(posts: list[dict]) -> dict:
-    """Generate a daily digest from posts.
-
-    Args:
-        posts: List of post dicts from feed_fetcher.
-
-    Returns:
-        Dict with keys: date, summary_md, summary_html, post_count,
-        top_count, tokens_used, ai_model.
-    """
-    if not posts:
-        return {
-            "date": date.today().isoformat(),
-            "summary_md": "今日暂无新文章。",
-            "summary_html": "<p>今日暂无新文章。</p>",
-            "post_count": 0,
-            "top_count": 0,
-            "tokens_used": 0,
-            "ai_model": SILICONFLOW_MODEL,
-        }
-
-    client = _get_client()
-    today = date.today().isoformat()
-
-    # Filter to recent posts (last 48h) and limit count for ranking
-    recent = _filter_recent_posts(posts, hours=48)
-    if not recent:
-        recent = posts  # fallback: use all if none have timestamps
-    candidates = sorted(recent, key=lambda p: p.get("published_at", ""), reverse=True)[:MAX_POSTS_FOR_RANKING]
-    logger.info(f"Ranking {len(candidates)} candidates (from {len(posts)} total, {len(recent)} recent)")
-
-    # Stage 1: Rank posts
-    ranked = _rank_posts(client, candidates)
-
-    # Stage 2: Generate summary from top posts
-    top_posts = ranked[:AI_TOP_N]
-    summary_md, tokens_used = _generate_summary(client, top_posts, today)
-    summary_html = _md_to_html(summary_md)
-
-    return {
-        "date": today,
-        "summary_md": summary_md,
-        "summary_html": summary_html,
-        "post_count": len(posts),
-        "top_count": len(top_posts),
-        "tokens_used": tokens_used,
-        "ai_model": SILICONFLOW_MODEL,
-        "top_posts": [
-            {"title": p["title"], "url": p["url"], "feed_title": p.get("feed_title", ""), "author": p.get("author", "")}
-            for p in top_posts
-        ],
-    }
+def _make_article_id(url: str) -> str:
+    """Generate a short deterministic ID from URL using sha256."""
+    return hashlib.sha256(url.encode()).hexdigest()[:16]
 
 
 def _filter_recent_posts(posts: list[dict], hours: int = 48) -> list[dict]:
@@ -90,94 +58,157 @@ def _filter_recent_posts(posts: list[dict], hours: int = 48) -> list[dict]:
     return recent
 
 
-def _rank_posts(client: OpenAI, posts: list[dict]) -> list[dict]:
-    """Use AI to rank posts by newsworthiness."""
-    post_list = ""
-    # Use shorter snippets for ranking to stay within token limits
-    rank_snippet_len = min(AI_SNIPPET_LENGTH, 150)
-    for i, p in enumerate(posts):
-        snippet = (p.get("content") or "")[:rank_snippet_len]
-        feed_title = p.get("feed_title", "")
-        post_list += f"\n{i+1}. [{feed_title}] \"{p['title']}\" ({p.get('published_at', 'unknown')})\n   {snippet}\n"
+def summarize_articles(posts: list[dict]) -> dict:
+    """Filter recent posts, batch-summarize with AI, return articles data.
 
-    prompt = f"""你是一位技术新闻编辑。以下是过去24小时内来自各技术博客的 {len(posts)} 篇文章。
-请按新闻价值（1-10分）对每篇文章打分，并选出最值得关注的 top {AI_TOP_N} 篇。
+    Args:
+        posts: List of post dicts from feed_fetcher.
 
-评分标准：原创性、对技术行业的影响、实用价值、是否揭示新信息。
+    Returns:
+        Dict with keys: date, article_count, tokens_used, ai_model, articles.
+    """
+    today = date.today().isoformat()
 
-文章列表：
-{post_list}
+    if not posts:
+        return {
+            "date": today,
+            "article_count": 0,
+            "tokens_used": 0,
+            "ai_model": SILICONFLOW_MODEL,
+            "articles": [],
+        }
 
-请以JSON格式回复：
-{{"rankings": [{{"index": 1, "score": 8, "reason": "简短理由"}}], "top_picks": [1, 5, 12]}}
+    # Filter to recent posts (last 48h)
+    recent = _filter_recent_posts(posts, hours=48)
+    if not recent:
+        recent = sorted(posts, key=lambda p: p.get("published_at", ""), reverse=True)[:50]
+    recent = sorted(recent, key=lambda p: p.get("published_at", ""), reverse=True)
+    logger.info(f"Summarizing {len(recent)} recent articles (from {len(posts)} total)")
 
-只返回JSON，不要其他内容。"""
+    client = _get_client()
+    total_tokens = 0
+    articles = []
 
-    try:
-        response = client.chat.completions.create(
-            model=SILICONFLOW_MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.3,
-            max_tokens=4000,
+    # Process in batches
+    for i in range(0, len(recent), AI_BATCH_SIZE):
+        batch = recent[i:i + AI_BATCH_SIZE]
+        batch_num = i // AI_BATCH_SIZE + 1
+        total_batches = (len(recent) + AI_BATCH_SIZE - 1) // AI_BATCH_SIZE
+        logger.info(f"Processing batch {batch_num}/{total_batches} ({len(batch)} articles)")
+        summaries, tokens = _batch_summarize(client, batch)
+        total_tokens += tokens
+
+        for j, post in enumerate(batch):
+            idx = j + 1
+            summary_data = summaries.get(idx, None)
+            if summary_data:
+                summary_zh = summary_data.get("summary_zh", post["title"])
+                tags = [t for t in summary_data.get("tags", []) if t in VALID_TAGS]
+            else:
+                # Fallback: use title as summary, category as tag
+                summary_zh = post["title"]
+                cat = post.get("category", "")
+                tags = _category_to_tags(cat)
+
+            articles.append({
+                "id": _make_article_id(post["url"]),
+                "title": post["title"],
+                "url": post["url"],
+                "author": post.get("author", ""),
+                "feed_title": post.get("feed_title", ""),
+                "category": post.get("category", ""),
+                "published_at": post.get("published_at", ""),
+                "content": post.get("content", ""),
+                "summary_zh": summary_zh,
+                "tags": tags if tags else ["tools"],
+            })
+
+    logger.info(f"Summarized {len(articles)} articles, {total_tokens} tokens used")
+    return {
+        "date": today,
+        "article_count": len(articles),
+        "tokens_used": total_tokens,
+        "ai_model": SILICONFLOW_MODEL,
+        "articles": articles,
+    }
+
+
+def _category_to_tags(category: str) -> list[str]:
+    """Map OPML category to valid tags as fallback."""
+    cat_lower = category.lower()
+    tags = []
+    mapping = {
+        "ai": "AI", "ml": "AI", "machine learning": "AI",
+        "llm": "LLM", "language model": "LLM",
+        "programming": "programming", "dev": "programming", "code": "programming",
+        "web": "web", "frontend": "web", "backend": "web",
+        "security": "security", "infosec": "security",
+        "devops": "devops", "ops": "devops", "sre": "devops",
+        "cloud": "cloud", "aws": "cloud", "gcp": "cloud", "azure": "cloud",
+        "open source": "open-source", "oss": "open-source",
+        "design": "design", "ux": "design", "ui": "design",
+        "business": "business", "startup": "business",
+    }
+    for key, tag in mapping.items():
+        if key in cat_lower and tag not in tags:
+            tags.append(tag)
+    return tags
+
+
+def _batch_summarize(client: OpenAI, batch: list[dict]) -> tuple[dict, int]:
+    """Summarize a batch of articles in one AI call. Returns (summaries_dict, tokens).
+
+    summaries_dict maps 1-based index to {"summary_zh": ..., "tags": [...]}.
+    On failure, retries once, then returns empty dict (caller uses fallback).
+    """
+    article_text = ""
+    for i, post in enumerate(batch):
+        content_snippet = (post.get("content") or "")[:1500]
+        article_text += (
+            f"\n---\n文章 {i+1}:\n"
+            f"标题: {post['title']}\n"
+            f"来源: {post.get('feed_title', '')}\n"
+            f"分类: {post.get('category', '')}\n"
+            f"内容: {content_snippet}\n"
         )
-        content = response.choices[0].message.content.strip()
-        if content.startswith("```"):
-            content = content.split("```")[1]
-            if content.startswith("json"):
-                content = content[4:]
-        result = json.loads(content)
-        top_indices = [i - 1 for i in result.get("top_picks", [])]
-        return [posts[i] for i in top_indices if 0 <= i < len(posts)]
-    except Exception as e:
-        logger.warning(f"AI ranking failed, using recency fallback: {e}")
-        return sorted(posts, key=lambda p: p.get("published_at", ""), reverse=True)[:AI_TOP_N]
 
-
-def _generate_summary(client: OpenAI, top_posts: list[dict], today: str) -> tuple[str, int]:
-    """Generate a Chinese digest summary."""
-    articles = ""
-    for i, p in enumerate(top_posts):
-        content = (p.get("content") or "")[:2000]
-        articles += f"\n### {i+1}. [{p.get('feed_title', '')}] {p['title']}\n"
-        articles += f"链接: {p['url']}\n"
-        articles += f"作者: {p.get('author', '未知')}\n"
-        articles += f"{content}\n"
-
-    prompt = f"""你正在撰写一份名为「新启动 Daily」的每日技术摘要，日期为 {today}。
-以下是今日最值得关注的 {len(top_posts)} 篇技术文章。
-
-请撰写一份中文摘要：
-- 开头用2-3句话概述今日主题
-- 按主题分组，每篇文章用2-4句话总结要点
-- 每篇附上原文链接
-- 结尾可以有一个"快讯"部分，简要提及其他值得注意的内容
-- 语气：专业、简洁、像一位知识渊博的朋友在分享
-- 使用 Markdown 格式
-
-文章内容：
-{articles}"""
-
-    response = client.chat.completions.create(
-        model=SILICONFLOW_MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.5,
-        max_tokens=8000,
+    prompt = BATCH_PROMPT_TEMPLATE.format(
+        count=len(batch),
+        tags=", ".join(VALID_TAGS),
+        articles=article_text,
     )
 
-    summary = response.choices[0].message.content.strip()
-    tokens = response.usage.total_tokens if response.usage else 0
-    return summary, tokens
+    for attempt in range(2):
+        try:
+            response = client.chat.completions.create(
+                model=SILICONFLOW_MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.3,
+                max_tokens=4000,
+            )
+            content = response.choices[0].message.content.strip()
+            tokens = response.usage.total_tokens if response.usage else 0
 
+            # Strip markdown code fences if present
+            if content.startswith("```"):
+                content = content.split("```")[1]
+                if content.startswith("json"):
+                    content = content[4:]
+            result = json.loads(content)
 
-def _md_to_html(md: str) -> str:
-    """Simple markdown to HTML conversion."""
-    html = md
-    html = re.sub(r'^### (.+)$', r'<h3>\1</h3>', html, flags=re.MULTILINE)
-    html = re.sub(r'^## (.+)$', r'<h2>\1</h2>', html, flags=re.MULTILINE)
-    html = re.sub(r'^# (.+)$', r'<h1>\1</h1>', html, flags=re.MULTILINE)
-    html = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', html)
-    html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', html)
-    html = re.sub(r'\n\n', '</p><p>', html)
-    html = f'<p>{html}</p>'
-    html = re.sub(r'^- (.+)$', r'<li>\1</li>', html, flags=re.MULTILINE)
-    return html
+            summaries = {}
+            for item in result.get("articles", []):
+                idx = item.get("index")
+                if idx is not None:
+                    summaries[idx] = {
+                        "summary_zh": item.get("summary_zh", ""),
+                        "tags": item.get("tags", []),
+                    }
+            return summaries, tokens
+
+        except Exception as e:
+            if attempt == 0:
+                logger.warning(f"Batch summarize attempt 1 failed, retrying: {e}")
+            else:
+                logger.error(f"Batch summarize failed after 2 attempts: {e}")
+                return {}, 0

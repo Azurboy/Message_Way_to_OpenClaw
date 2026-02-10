@@ -1,16 +1,17 @@
 # 新启动 Daily → OpenClaw
 
-AI 驱动的每日技术摘要，专为 agent 访问设计。
+AI 驱动的每日技术文章库，全量存储 + 逐篇摘要/标签，专为 Agent 自主筛选设计。
 
 ## 架构
 
 ```
 GitHub Actions (每日定时)
-  → Python Pipeline: 抓取 92 个 RSS 源 + AI 生成摘要
-  → 生成静态内容 → git push → Vercel 自动部署
+  → Python Pipeline: 抓取 92 个 RSS 源 → 过滤近 48h → AI 批量摘要/标签
+  → 生成 articles/{date}.json → git push → Vercel 自动部署
 
 Vercel (Next.js)
-  → 人类可读网页 + JSON API + llms.txt + OpenClaw Skill
+  → 文章卡片列表 + JSON API（支持 ?tags= 过滤）+ llms.txt + OpenClaw Skill
+  → Agent 获取全量文章 → 按标签过滤 → 根据用户兴趣自主挑选
 ```
 
 ## 本地开发
@@ -22,7 +23,7 @@ export SILICONFLOW_API_KEY=sk-xxx
 python -m pipeline.run
 ```
 
-运行后检查 `site/content/digests/latest.json`。
+运行后检查 `site/content/articles/latest.json`。
 
 ### 网站
 
@@ -45,10 +46,19 @@ npm run dev
 
 | 端点 | 说明 |
 |------|------|
-| `/api/digest/latest` | 最新摘要 JSON |
-| `/api/digest/YYYY-MM-DD` | 指定日期摘要 |
+| `/api/articles/latest` | 全量文章 JSON |
+| `/api/articles/latest?tags=AI,LLM` | 按标签过滤 |
+| `/api/articles/YYYY-MM-DD` | 指定日期文章 |
 | `/api/feeds` | 监控的博客列表 |
-| `/api/archive` | 历史摘要索引 |
+| `/api/archive` | 历史索引 |
 | `/llms.txt` | AI agent 发现文件 |
-| `/llms-full.txt` | 完整最新摘要 (Markdown) |
+| `/llms-full.txt` | 完整最新文章 (Markdown) |
 | `/SKILL.md` | OpenClaw skill 定义 |
+
+## 可用标签
+
+```
+AI, LLM, programming, web, security, devops, cloud, open-source,
+design, business, career, hardware, mobile, database, networking,
+performance, testing, architecture, tools, culture
+```

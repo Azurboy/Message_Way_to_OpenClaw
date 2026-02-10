@@ -1,27 +1,30 @@
 import Link from "next/link";
-import { getLatestArticles } from "@/lib/content";
+import { getArticlesByDate, getArchiveIndex } from "@/lib/content";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-export default function Home() {
-  const data = getLatestArticles();
+export async function generateStaticParams() {
+  const index = getArchiveIndex();
+  return index.entries.map((entry) => ({ date: entry.date }));
+}
+
+export default async function ArticlesPage({ params }: { params: Promise<{ date: string }> }) {
+  const { date } = await params;
+  const data = getArticlesByDate(date);
 
   if (!data) {
-    return (
-      <div className="text-center py-20">
-        <h1 className="text-3xl font-bold mb-4">新启动 Daily</h1>
-        <p className="text-gray-600">暂无文章数据。Pipeline 运行后将自动生成。</p>
-      </div>
-    );
+    notFound();
   }
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">新启动 Daily</h1>
+        <Link href="/archive" className="text-sm text-blue-600 hover:underline">← 归档</Link>
+        <h1 className="text-3xl font-bold mt-2 mb-2">新启动 Daily - {data.date}</h1>
         <p className="text-gray-600">
-          {data.date} · {data.article_count} 篇文章（全量 + AI 摘要）
+          {data.article_count} 篇文章
         </p>
       </div>
 
@@ -64,9 +67,8 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="mt-12 pt-6 border-t border-gray-200 flex justify-between text-sm text-gray-500">
-        <span>AI Model: {data.ai_model}</span>
-        <Link href="/archive" className="text-blue-600 hover:underline">查看历史 →</Link>
+      <div className="mt-12 pt-6 border-t border-gray-200 text-sm text-gray-500">
+        <span>AI Model: {data.ai_model} · Tokens: {data.tokens_used}</span>
       </div>
     </div>
   );

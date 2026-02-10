@@ -8,26 +8,27 @@ export default function AboutPage() {
 
       <div className="space-y-4 text-gray-700 leading-relaxed">
         <p>
-          <strong>新启动 Daily</strong> 是一个 AI 驱动的每日技术摘要服务。
-          我们监控 92 个顶级技术博客的 RSS 源，通过 AI 筛选出最有价值的文章，
-          并生成中文摘要。
+          <strong>新启动 Daily</strong> 是一个 AI 驱动的每日技术文章库。
+          我们监控 92 个顶级技术博客的 RSS 源，对每篇近期文章生成中文摘要和标签，
+          供人类浏览和 AI Agent 自主筛选。
         </p>
 
         <h2 className="text-xl font-semibold mt-8 mb-3">工作原理</h2>
         <ol className="list-decimal list-inside space-y-2">
           <li>每天自动抓取 92 个技术博客的最新文章</li>
-          <li>AI 对所有文章进行新闻价值评分</li>
-          <li>选出 Top 15 最值得关注的文章</li>
-          <li>生成结构化的中文摘要</li>
-          <li>自动发布到本网站</li>
+          <li>过滤最近 48 小时内的新文章</li>
+          <li>AI 批量生成每篇文章的中文摘要和标签</li>
+          <li>全量存储，不做精选裁剪</li>
+          <li>自动发布到本网站，Agent 可按标签过滤</li>
         </ol>
 
         <h2 className="text-xl font-semibold mt-8 mb-3">Agent 访问</h2>
-        <p>本站专为 AI agent 设计了访问接口：</p>
+        <p>本站专为 AI Agent 设计了访问接口：</p>
         <ul className="list-disc list-inside space-y-1 mt-2">
           <li><code className="bg-gray-100 px-1 rounded">/llms.txt</code> - Agent 发现文件</li>
-          <li><code className="bg-gray-100 px-1 rounded">/llms-full.txt</code> - 完整最新摘要 (Markdown)</li>
-          <li><code className="bg-gray-100 px-1 rounded">/api/digest/latest</code> - JSON API</li>
+          <li><code className="bg-gray-100 px-1 rounded">/llms-full.txt</code> - 完整最新文章列表 (Markdown)</li>
+          <li><code className="bg-gray-100 px-1 rounded">/api/articles/latest</code> - 全量文章 JSON API</li>
+          <li><code className="bg-gray-100 px-1 rounded">/api/articles/latest?tags=AI,LLM</code> - 按标签过滤</li>
           <li><code className="bg-gray-100 px-1 rounded">/SKILL.md</code> - OpenClaw Skill 定义</li>
         </ul>
 

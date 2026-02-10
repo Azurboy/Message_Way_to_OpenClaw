@@ -2,17 +2,36 @@ import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
 const CONTENT_DIR = join(process.cwd(), "content");
-const DIGESTS_DIR = join(CONTENT_DIR, "digests");
+const ARTICLES_DIR = join(CONTENT_DIR, "articles");
 
-export interface Digest {
+export interface Article {
+  id: string;
+  title: string;
+  url: string;
+  author: string;
+  feed_title: string;
+  category: string;
+  published_at: string;
+  content: string;
+  summary_zh: string;
+  tags: string[];
+}
+
+export interface ArticlesData {
   date: string;
-  summary_md: string;
-  summary_html: string;
-  post_count: number;
-  top_count: number;
+  article_count: number;
   tokens_used: number;
   ai_model: string;
-  top_posts?: { title: string; url: string; feed_title: string; author: string }[];
+  articles: Article[];
+}
+
+export interface ArchiveEntry {
+  date: string;
+  article_count: number;
+}
+
+export interface ArchiveIndex {
+  entries: ArchiveEntry[];
 }
 
 export interface FeedsData {
@@ -21,40 +40,33 @@ export interface FeedsData {
   feeds: { title: string; xml_url: string; html_url: string; category: string }[];
 }
 
-export interface ArchiveEntry {
-  date: string;
-  post_count: number;
-  top_count: number;
-}
-
-export interface ArchiveIndex {
-  digests: ArchiveEntry[];
-}
-
 function readJson<T>(path: string): T | null {
   if (!existsSync(path)) return null;
   return JSON.parse(readFileSync(path, "utf-8")) as T;
 }
 
-export function getLatestDigest(): Digest | null {
-  return readJson<Digest>(join(DIGESTS_DIR, "latest.json"));
+export function getLatestArticles(): ArticlesData | null {
+  return readJson<ArticlesData>(join(ARTICLES_DIR, "latest.json"));
 }
 
-export function getDigestByDate(date: string): Digest | null {
-  // Sanitize date input to prevent path traversal
+export function getArticlesByDate(date: string): ArticlesData | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
-  return readJson<Digest>(join(DIGESTS_DIR, `${date}.json`));
+  return readJson<ArticlesData>(join(ARTICLES_DIR, `${date}.json`));
 }
 
-export function getDigestMarkdown(date: string): string | null {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
-  const path = join(DIGESTS_DIR, `${date}.md`);
-  if (!existsSync(path)) return null;
-  return readFileSync(path, "utf-8");
+export function getArticlesByTags(data: ArticlesData, tags: string[]): Article[] {
+  const tagSet = new Set(tags.map((t) => t.toLowerCase()));
+  return data.articles.filter((a) =>
+    a.tags.some((t) => tagSet.has(t.toLowerCase()))
+  );
 }
 
 export function getArchiveIndex(): ArchiveIndex {
-  return readJson<ArchiveIndex>(join(CONTENT_DIR, "index.json")) ?? { digests: [] };
+  const raw = readJson<Record<string, unknown>>(join(CONTENT_DIR, "index.json"));
+  if (!raw) return { entries: [] };
+  // Support both old "digests" and new "entries" key
+  const entries = (raw.entries ?? raw.digests ?? []) as ArchiveEntry[];
+  return { entries };
 }
 
 export function getFeedsData(): FeedsData | null {

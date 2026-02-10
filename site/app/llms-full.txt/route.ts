@@ -1,19 +1,29 @@
 import { NextResponse } from "next/server";
-import { getLatestDigest, getDigestMarkdown } from "@/lib/content";
+import { getLatestArticles } from "@/lib/content";
 
 export async function GET() {
-  const digest = getLatestDigest();
-  if (!digest) {
-    return new NextResponse("No digest available yet.", {
+  const data = getLatestArticles();
+  if (!data) {
+    return new NextResponse("No articles available yet.", {
       status: 404,
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
   }
 
-  const md = getDigestMarkdown(digest.date);
-  const content = md ?? `# 新启动 Daily - ${digest.date}\n\n${digest.summary_md}`;
+  let md = `# 新启动 Daily - ${data.date}\n\n`;
+  md += `${data.article_count} 篇文章 · AI Model: ${data.ai_model}\n\n`;
 
-  return new NextResponse(content, {
+  for (const article of data.articles) {
+    md += `## ${article.title}\n`;
+    md += `- 来源: ${article.feed_title}`;
+    if (article.author) md += ` · ${article.author}`;
+    md += `\n`;
+    md += `- 链接: ${article.url}\n`;
+    md += `- 标签: ${article.tags.join(", ")}\n`;
+    md += `\n${article.summary_zh}\n\n---\n\n`;
+  }
+
+  return new NextResponse(md, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }

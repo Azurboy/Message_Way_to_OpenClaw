@@ -7,7 +7,7 @@ import sys
 from pipeline.config import FEEDS_OPML
 from pipeline.opml_parser import parse_opml
 from pipeline.feed_fetcher import fetch_all_feeds
-from pipeline.ai_summarizer import generate_digest
+from pipeline.ai_summarizer import summarize_articles
 from pipeline.content_generator import generate_content
 
 logging.basicConfig(
@@ -33,21 +33,20 @@ async def main():
     logger.info(f"Fetched {len(posts)} posts total")
 
     if not posts:
-        logger.warning("No posts fetched, generating empty digest")
+        logger.warning("No posts fetched, generating empty articles data")
 
-    # 3. AI summarize
-    logger.info("Generating AI digest...")
-    digest = generate_digest(posts)
+    # 3. AI summarize all recent articles
+    logger.info("Summarizing articles...")
+    articles_data = summarize_articles(posts)
     logger.info(
-        f"Digest for {digest['date']}: "
-        f"{digest['post_count']} posts, "
-        f"{digest['top_count']} top picks, "
-        f"{digest['tokens_used']} tokens used"
+        f"Articles for {articles_data['date']}: "
+        f"{articles_data['article_count']} articles, "
+        f"{articles_data['tokens_used']} tokens used"
     )
 
     # 4. Generate static content
     logger.info("Writing content files...")
-    generate_content(digest, feeds)
+    generate_content(articles_data, feeds)
     logger.info("Done!")
 
 

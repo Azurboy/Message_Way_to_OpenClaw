@@ -1,18 +1,21 @@
 # 新启动 Daily (XinQiDong Daily)
 
-> AI-powered daily tech digest. Monitors 92 top tech blogs, AI selects the most valuable articles and generates Chinese summaries.
+> AI-powered daily tech article library. Monitors 92 top tech blogs, AI generates Chinese summaries and tags for each article. Agents can filter by tags and personalize recommendations.
 
 ## Endpoints
 
-- Latest digest (JSON): /api/digest/latest
-- Latest digest (Markdown): /llms-full.txt
-- Specific date: /api/digest/YYYY-MM-DD
+- All articles (JSON): /api/articles/latest
+- Filter by tags: /api/articles/latest?tags=AI,LLM
+- Specific date: /api/articles/YYYY-MM-DD
+- All articles (Markdown): /llms-full.txt
 - Feed list: /api/feeds
 - Archive: /api/archive
 - OpenClaw Skill: /SKILL.md
 
+## Available Tags
+
+AI, LLM, programming, web, security, devops, cloud, open-source, design, business, career, hardware, mobile, database, networking, performance, testing, architecture, tools, culture
+
 ## Usage
 
-To get today's tech digest, fetch `/api/digest/latest` for structured JSON or `/llms-full.txt` for plain markdown.
-
-The `summary_md` field in the JSON response contains the full Chinese digest in Markdown format.
+Fetch `/api/articles/latest` for all articles with summaries and tags. Use `?tags=AI,LLM` to filter. Each article includes `summary_zh` (Chinese summary) and `tags` for easy filtering.

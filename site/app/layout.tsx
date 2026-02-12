@@ -27,7 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               新启动 Daily
             </Link>
             <div className="flex gap-6 text-sm">
-              <Link href="/archive" className="text-gray-600 hover:text-gray-900">归档</Link>
+              <Link href="/home" className="text-gray-600 hover:text-gray-900">首页</Link>
+              <Link href="/favorites" className="text-gray-600 hover:text-gray-900">收藏</Link>
               <Link href="/feeds" className="text-gray-600 hover:text-gray-900">源列表</Link>
               <Link href="/about" className="text-gray-600 hover:text-gray-900">关于</Link>
             </div>

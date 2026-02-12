@@ -13,9 +13,15 @@ const AI_BOT_PATTERNS = [
 ];
 
 function isLikelyAgent(request: NextRequest): boolean {
+  // Next.js RSC client-side navigation — definitely a browser, never an agent
+  if (request.headers.get("rsc") || request.headers.get("next-router-state-tree")) {
+    return false;
+  }
+
   const ua = request.headers.get("user-agent") ?? "";
   const secFetchMode = request.headers.get("sec-fetch-mode");
   const secFetchDest = request.headers.get("sec-fetch-dest");
+  const secFetchSite = request.headers.get("sec-fetch-site");
   const accept = request.headers.get("accept") ?? "";
 
   let score = 0;
@@ -35,6 +41,8 @@ function isLikelyAgent(request: NextRequest): boolean {
   // --- Negative signals (browser navigation) ---
   if (secFetchMode === "navigate") score -= 100;
   if (secFetchDest === "document") score -= 50;
+  // same-origin fetch = browser JS on the same site (e.g. Next.js client nav)
+  if (secFetchSite === "same-origin") score -= 60;
   if (accept.includes("text/html")) score -= 10;
 
   return score >= 40;

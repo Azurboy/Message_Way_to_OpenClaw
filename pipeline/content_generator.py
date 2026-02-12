@@ -4,7 +4,7 @@ import json
 import logging
 from pathlib import Path
 
-from pipeline.config import CONTENT_DIR, ARTICLES_DIR
+from pipeline.config import CONTENT_DIR, ARTICLES_DIR, ARTICLE_CONTENT_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -13,24 +13,54 @@ def generate_content(articles_data: dict, feeds: list[dict]):
     """Write articles and feed data to site/content/.
 
     Creates:
-      - site/content/articles/{date}.json
-      - site/content/articles/latest.json
+      - site/content/articles/{date}.json (without content field)
+      - site/content/articles/latest.json (without content field)
+      - site/content/article-content/{id}.json (individual article content)
       - site/content/feeds.json
       - site/content/index.json (archive index)
     """
     articles_date = articles_data["date"]
 
-    # 1. Write articles JSON
+    # 1. Write individual article content files and strip content from main data
+    articles_for_list = []
+    for article in articles_data["articles"]:
+        article_id = article["id"]
+        content = article.get("content", "")
+
+        # Write individual content file
+        content_file = ARTICLE_CONTENT_DIR / f"{article_id}.json"
+        _write_json(content_file, {
+            "id": article_id,
+            "title": article["title"],
+            "url": article["url"],
+            "content": content,
+        })
+
+        # Create article entry without content for the list
+        article_without_content = {k: v for k, v in article.items() if k != "content"}
+        articles_for_list.append(article_without_content)
+
+    logger.info(f"Wrote {len(articles_for_list)} individual content files to {ARTICLE_CONTENT_DIR}")
+
+    # 2. Write articles JSON (without content field)
+    articles_list_data = {
+        "date": articles_data["date"],
+        "article_count": articles_data["article_count"],
+        "tokens_used": articles_data["tokens_used"],
+        "ai_model": articles_data["ai_model"],
+        "articles": articles_for_list,
+    }
+
     articles_json_path = ARTICLES_DIR / f"{articles_date}.json"
-    _write_json(articles_json_path, articles_data)
+    _write_json(articles_json_path, articles_list_data)
     logger.info(f"Wrote {articles_json_path}")
 
-    # 2. Write latest.json (same content, easy access)
+    # 3. Write latest.json (same content, easy access)
     latest_path = ARTICLES_DIR / "latest.json"
-    _write_json(latest_path, articles_data)
+    _write_json(latest_path, articles_list_data)
     logger.info(f"Wrote {latest_path}")
 
-    # 3. Write feeds.json
+    # 4. Write feeds.json
     feeds_data = {
         "count": len(feeds),
         "updated_at": articles_date,
@@ -40,7 +70,7 @@ def generate_content(articles_data: dict, feeds: list[dict]):
     _write_json(feeds_path, feeds_data)
     logger.info(f"Wrote {feeds_path}")
 
-    # 4. Update archive index
+    # 5. Update archive index
     _update_index(articles_date, articles_data["article_count"])
 
 

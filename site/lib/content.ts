@@ -3,6 +3,7 @@ import { join } from "path";
 
 const CONTENT_DIR = join(process.cwd(), "content");
 const ARTICLES_DIR = join(CONTENT_DIR, "articles");
+const ARTICLE_CONTENT_DIR = join(CONTENT_DIR, "article-content");
 
 export interface Article {
   id: string;
@@ -12,9 +13,16 @@ export interface Article {
   feed_title: string;
   category: string;
   published_at: string;
-  content: string;
   summary_zh: string;
   tags: string[];
+  // Note: content field is no longer included in list responses
+}
+
+export interface ArticleContent {
+  id: string;
+  title: string;
+  url: string;
+  content: string;
 }
 
 export interface ArticlesData {
@@ -71,4 +79,9 @@ export function getArchiveIndex(): ArchiveIndex {
 
 export function getFeedsData(): FeedsData | null {
   return readJson<FeedsData>(join(CONTENT_DIR, "feeds.json"));
+}
+
+export function getArticleContent(id: string): ArticleContent | null {
+  if (!/^[a-f0-9]+$/i.test(id)) return null;
+  return readJson<ArticleContent>(join(ARTICLE_CONTENT_DIR, `${id}.json`));
 }

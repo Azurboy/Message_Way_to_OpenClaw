@@ -8,10 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FEEDS_OPML = BASE_DIR / "feeds.opml"
 CONTENT_DIR = BASE_DIR / "site" / "content"
 ARTICLES_DIR = CONTENT_DIR / "articles"
+ARTICLE_CONTENT_DIR = CONTENT_DIR / "article-content"  # Individual article content files
 
 # Ensure output dirs exist
 CONTENT_DIR.mkdir(parents=True, exist_ok=True)
 ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
+ARTICLE_CONTENT_DIR.mkdir(parents=True, exist_ok=True)
 
 # API
 SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY", "")

@@ -1,6 +1,53 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// --- Agent detection: redirect AI bots from HTML pages to /SKILL.md ---
+
+const AI_BOT_PATTERNS = [
+  /GPTBot/i, /ChatGPT-User/i, /OAI-SearchBot/i,
+  /Claude-Web/i, /anthropic-ai/i, /ClaudeBot/i,
+  /PerplexityBot/i, /Perplexity/i,
+  /Google-Extended/i, /Bytespider/i,
+  /CCBot/i, /cohere-ai/i, /Amazonbot/i,
+  /YouBot/i, /Diffbot/i, /Applebot-Extended/i,
+];
+
+function isLikelyAgent(request: NextRequest): boolean {
+  const ua = request.headers.get("user-agent") ?? "";
+  const secFetchMode = request.headers.get("sec-fetch-mode");
+  const secFetchDest = request.headers.get("sec-fetch-dest");
+  const accept = request.headers.get("accept") ?? "";
+
+  let score = 0;
+
+  // Known AI bot UA → definitive
+  if (AI_BOT_PATTERNS.some((p) => p.test(ua))) score += 100;
+
+  // Missing Sec-Fetch-Mode — modern browsers always send it on navigation
+  if (!secFetchMode) score += 40;
+
+  // Programmatic fetch modes
+  if (secFetchMode === "cors" || secFetchMode === "no-cors") score += 30;
+
+  // Generic accept header — browsers include text/html
+  if (accept === "*/*" || accept === "") score += 20;
+
+  // --- Negative signals (browser navigation) ---
+  if (secFetchMode === "navigate") score -= 100;
+  if (secFetchDest === "document") score -= 50;
+  if (accept.includes("text/html")) score -= 10;
+
+  return score >= 40;
+}
+
+function shouldInterceptForAgent(pathname: string): boolean {
+  if (pathname === "/") return true;
+  const prefixes = ["/home", "/about", "/feeds", "/archive", "/favorites", "/article/", "/articles/"];
+  return prefixes.some((p) => pathname.startsWith(p));
+}
+
+// --- Existing API gate ---
+
 // The passphrase is only documented in /SKILL.md — forces agents to read it
 const SKILL_ACK_PARAM = "ack";
 const SKILL_ACK_VALUE = "xinqidong";
@@ -22,6 +69,15 @@ function requiresRationale(pathname: string): boolean {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Agent interception: redirect likely AI agents from HTML pages to /SKILL.md
+  if (
+    !request.nextUrl.searchParams.has("human") &&
+    shouldInterceptForAgent(pathname) &&
+    isLikelyAgent(request)
+  ) {
+    return NextResponse.redirect(new URL("/SKILL.md", request.url));
+  }
 
   // Check agent gate for protected API routes
   if (isGatedPath(pathname)) {

@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "新启动 Daily",
-  description: "每日技术文章库 - 监控92个顶级技术博客，AI为每篇生成中文摘要和标签，支持Agent按标签过滤和个性化筛选",
+  title: "DailyBit",
+  description: "每日技术文章库 - 监控92个顶级技术博客，AI为每篇生成中文摘要和标签，人与Agent都能获取信息",
   other: {
     "ai-plugin": "/.well-known/ai-plugin.json",
   },
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="border-b border-gray-200 bg-white">
           <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
             <Link href="/" className="text-xl font-bold text-gray-900 hover:text-blue-600">
-              新启动 Daily
+              DailyBit
             </Link>
             <div className="flex gap-6 text-sm">
               <Link href="/home" className="text-gray-600 hover:text-gray-900">首页</Link>
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <footer className="border-t border-gray-200 mt-16">
           <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
-            新启动 Daily - AI 驱动的每日技术摘要 ·{" "}
+            DailyBit - AI 驱动的每日技术摘要 ·{" "}
             <Link href="/llms.txt" className="underline">llms.txt</Link> ·{" "}
             <Link href="/SKILL.md" className="underline">OpenClaw Skill</Link>
           </div>

@@ -22,7 +22,7 @@ export default async function ArticlesPage({ params }: { params: Promise<{ date:
     <div>
       <div className="mb-8">
         <Link href="/archive" className="text-sm text-blue-600 hover:underline">← 归档</Link>
-        <h1 className="text-3xl font-bold mt-2 mb-2">新启动 Daily - {data.date}</h1>
+        <h1 className="text-3xl font-bold mt-2 mb-2">DailyBit - {data.date}</h1>
         <p className="text-gray-600">
           {data.article_count} 篇文章
         </p>

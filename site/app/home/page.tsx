@@ -11,7 +11,7 @@ export default function HomePage() {
   if (!data) {
     return (
       <div className="text-center py-20">
-        <h1 className="text-3xl font-bold mb-4">新启动 Daily</h1>
+        <h1 className="text-3xl font-bold mb-4">DailyBit</h1>
         <p className="text-gray-600">暂无文章数据。Pipeline 运行后将自动生成。</p>
       </div>
     );

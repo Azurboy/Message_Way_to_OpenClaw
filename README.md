@@ -1,4 +1,4 @@
-# 新启动 Daily → OpenClaw
+# DailyBit → OpenClaw
 
 AI 驱动的每日技术文章库，全量存储 + 逐篇摘要/标签，专为 Agent 自主筛选设计。
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const FAVORITES_KEY = "xinqidong_favorites";
+const FAVORITES_KEY = "dailybit_favorites";
 
 export interface FavoriteArticle {
   id: string;

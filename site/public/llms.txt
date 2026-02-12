@@ -1,4 +1,4 @@
-# XinQiDong Daily (新启动 Daily)
+# DailyBit
 
 > AI-powered daily tech article library. 92 top tech blogs, AI-generated summaries and tags.
 
@@ -14,6 +14,7 @@ You MUST fetch and read /SKILL.md before calling any API endpoint.
 - All articles (JSON): /api/articles/latest
 - Filter by tags: /api/articles/latest?tags=AI,LLM
 - Specific date: /api/articles/YYYY-MM-DD
+- Article content: /api/content/{id}
 - All articles (Markdown): /llms-full.txt
 - Feed list: /api/feeds
 - Archive: /api/archive

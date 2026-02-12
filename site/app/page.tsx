@@ -6,7 +6,7 @@ export const revalidate = false;
 export default function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-      <h1 className="text-4xl font-bold mb-3">新启动 Daily</h1>
+      <h1 className="text-4xl font-bold mb-3">DailyBit</h1>
       <p className="text-gray-600 mb-12 max-w-md">
         AI-powered daily tech article library. 92 top blogs, Chinese summaries, tag-based filtering.
       </p>

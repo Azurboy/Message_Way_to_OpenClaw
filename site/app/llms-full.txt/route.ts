@@ -10,7 +10,7 @@ export async function GET() {
     });
   }
 
-  let md = `# 新启动 Daily - ${data.date}\n\n`;
+  let md = `# DailyBit - ${data.date}\n\n`;
   md += `${data.article_count} 篇文章 · AI Model: ${data.ai_model}\n\n`;
 
   for (const article of data.articles) {

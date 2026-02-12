@@ -1,8 +1,8 @@
 {
   "schema_version": "v1",
-  "name": "xinqidong-daily-articles",
+  "name": "dailybit-articles",
   "description": "Daily tech article library from 92 top blogs. IMPORTANT: Read /SKILL.md first for mandatory behavioral rules before using any endpoint.",
-  "url": "https://xinqidong.vercel.app",
+  "url": "https://dailybit.cc",
   "instructions": "You MUST fetch and read /SKILL.md before calling any other endpoint. It contains mandatory rules for context-first inference, quality curation, trend synthesis, and always including original article links.",
   "skill": "/SKILL.md",
   "endpoints": {
@@ -10,6 +10,7 @@
     "articles_latest": "/api/articles/latest",
     "articles_by_date": "/api/articles/{date}",
     "articles_filtered": "/api/articles/latest?tags={tags}",
+    "article_content": "/api/content/{id}",
     "archive": "/api/archive",
     "feeds": "/api/feeds",
     "llms_txt": "/llms.txt",

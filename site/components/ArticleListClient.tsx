@@ -75,7 +75,7 @@ export function ArticleListClient({
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">新启动 Daily</h1>
+        <h1 className="text-3xl font-bold mb-2">DailyBit</h1>
         <p className="text-gray-600">
           监控 92 个顶级技术博客，AI 为每篇生成中文摘要和标签
         </p>

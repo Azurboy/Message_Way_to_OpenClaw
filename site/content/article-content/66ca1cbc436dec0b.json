@@ -1,0 +1,6 @@
+{
+  "id": "66ca1cbc436dec0b",
+  "title": "Your feed reader is fetching from a limited network area",
+  "url": "https://utcc.utoronto.ca/~cks/cspace-gen-http429.html",
+  "content": "<p>Your software is blocked from fetching my syndication feeds\n  because it is fetching them from a limited network area, such as large\n  cloud provider networks. Unfortunately as of 2025-11-22, these are being\n  heavily abused by aggressive web crawlers and other automated software.\n  Your software has been redirected to this special single-entry feed\n  so that you can hopefully find out about this and ideally remedy it.\n  Please see\n  <a href=\"https://utcc.utoronto.ca/~cks/cspace-gen-http429.html\">my\n  general web page on limited network areas</a>.\n  </p>\n  <p>I am willing to exempt at least some feed readers from this\n  restriction. See the page above for details on how to contact me to\n  arrange this.\n  </p>"
+}

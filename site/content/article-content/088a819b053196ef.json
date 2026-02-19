@@ -1,0 +1,6 @@
+{
+  "id": "088a819b053196ef",
+  "title": "Typing without having to type",
+  "url": "https://simonwillison.net/2026/Feb/18/typing/#atom-everything",
+  "content": "<p>25+ years into my career as a programmer I think I may <em>finally</em> be coming around to preferring type hints or even strong typing. I resisted those in the past because they slowed down the rate at which I could iterate on code, especially in the REPL environments that were key to my productivity. But if a coding agent is doing all that <em>typing</em> for me, the benefits of explicitly defining all of those types are suddenly much more attractive.</p>\n\n    <p>Tags: <a href=\"https://simonwillison.net/tags/ai-assisted-programming\">ai-assisted-programming</a>, <a href=\"https://simonwillison.net/tags/programming\">programming</a>, <a href=\"https://simonwillison.net/tags/programming-languages\">programming-languages</a>, <a href=\"https://simonwillison.net/tags/static-typing\">static-typing</a></p>"
+}

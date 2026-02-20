@@ -1,0 +1,6 @@
+{
+  "id": "6adb3c443345d912",
+  "title": "LadybirdBrowser/ladybird: Abandon Swift adoption",
+  "url": "https://simonwillison.net/2026/Feb/19/ladybird/#atom-everything",
+  "content": "<p><strong><a href=\"https://github.com/LadybirdBrowser/ladybird/commit/e87f889e31afbb5fa32c910603c7f5e781c97afd\">LadybirdBrowser/ladybird: Abandon Swift adoption</a></strong></p>\nBack <a href=\"https://simonwillison.net/2024/Aug/11/ladybird-set-to-adopt-swift/\">in August 2024</a> the Ladybird browser project announced an intention to adopt Swift as their memory-safe language of choice.</p>\n<p>As of <a href=\"https://github.com/LadybirdBrowser/ladybird/commit/e87f889e31afbb5fa32c910603c7f5e781c97afd\">this commit</a> it looks like they've changed their mind:</p>\n<blockquote>\n<p><strong>Everywhere: Abandon Swift adoption</strong></p>\n<p>After making no progress on this for a very long time, let's acknowledge it's not going anywhere and remove it from the codebase.</p>\n</blockquote>\n\n    <p><small></small>Via <a href=\"https://news.ycombinator.com/item?id=47067678\">Hacker News</a></small></p>\n\n\n    <p>Tags: <a href=\"https://simonwillison.net/tags/ladybird\">ladybird</a>, <a href=\"https://simonwillison.net/tags/swift\">swift</a></p>"
+}

@@ -155,11 +155,16 @@ def _category_to_tags(category: str) -> list[str]:
     return tags
 
 
-def _batch_summarize(client: OpenAI, batch: list[dict]) -> tuple[dict, int]:
+def _batch_summarize(client: OpenAI, batch: list[dict], custom_prompt: str | None = None) -> tuple[dict, int]:
     """Summarize a batch of articles in one AI call. Returns (summaries_dict, tokens).
 
     summaries_dict maps 1-based index to {"summary_zh": ..., "tags": [...]}.
     On failure, retries once, then returns empty dict (caller uses fallback).
+
+    Args:
+        client: OpenAI client
+        batch: list of post dicts
+        custom_prompt: optional user-provided prompt to prepend to the system instruction
     """
     article_text = ""
     for i, post in enumerate(batch):
@@ -177,6 +182,9 @@ def _batch_summarize(client: OpenAI, batch: list[dict]) -> tuple[dict, int]:
         tags=", ".join(VALID_TAGS),
         articles=article_text,
     )
+
+    if custom_prompt:
+        prompt = f"用户自定义要求：{custom_prompt}\n\n{prompt}"
 
     for attempt in range(2):
         try:

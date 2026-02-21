@@ -6,7 +6,7 @@ description: >
   AI/programming/security, or wants personalized article recommendations. Triggers on:
   "今天有什么新闻", "tech news today", "what's trending in AI", "daily digest",
   "每日简报", "有什么值得看的文章".
-version: 2.2.0
+version: 2.3.0
 base_url: https://dailybit.cc
 homepage: https://dailybit.cc
 tags: [news, tech, rss, articles, daily-briefing, AI, programming]
@@ -298,6 +298,76 @@ GET /api/archive
 ```http
 GET /api/feeds
 ```
+
+---
+
+## Feed Management (Requires User Token)
+
+Agents can manage a user's RSS feed subscriptions if the user provides their API token.
+
+### Authentication
+
+Feed management endpoints use **token-based auth** instead of session cookies:
+
+```
+?ack=xinqidong&token=USER_API_TOKEN
+```
+
+The user generates their token in DailyBit Settings (https://dailybit.cc/dashboard/settings).
+Ask the user to share their token if they want you to manage subscriptions.
+
+### Endpoints
+
+**List all feeds:**
+```http
+GET /api/agent/feeds?ack=xinqidong&token=USER_TOKEN
+```
+
+Returns an array of `FeedItem` objects:
+```json
+[
+  {
+    "type": "default",
+    "id": "https://example.com/feed.xml",
+    "feed_url": "https://example.com/feed.xml",
+    "feed_title": "Example Blog",
+    "html_url": "https://example.com",
+    "category": "AI / ML"
+  },
+  {
+    "type": "custom",
+    "id": "uuid-here",
+    "feed_url": "https://other.blog/rss",
+    "feed_title": "Other Blog"
+  }
+]
+```
+
+**Add a feed:**
+```http
+POST /api/agent/feeds?ack=xinqidong&token=USER_TOKEN
+Content-Type: application/json
+
+{ "feed_url": "https://example.com/feed.xml", "feed_title": "Example Blog" }
+```
+
+**Remove a feed:**
+```http
+DELETE /api/agent/feeds?ack=xinqidong&token=USER_TOKEN
+Content-Type: application/json
+
+{ "type": "default", "id": "https://example.com/feed.xml" }
+```
+
+- For preset feeds (`type: "default"`), the `id` is the feed's `feed_url` (XML URL).
+- For custom feeds (`type: "custom"`), the `id` is the UUID returned when the feed was added.
+
+### Agent Behavior Guidelines for Feed Management
+
+1. **Always confirm before deleting.** When the user says "unsubscribe from X", first list feeds to find the match, then confirm: "I found 'X Blog' — shall I remove it?"
+2. **Match by feed_title.** When a user references a blog by name (e.g., "that Simon Willison blog"), search the feed list by `feed_title` to find the correct `id`.
+3. **No token? Ask the user.** If you don't have a token, tell the user: "To manage your subscriptions, I need your DailyBit API token. You can generate one at https://dailybit.cc/dashboard/settings."
+4. **Rate limit:** Maximum 10 feed management requests per session.
 
 ---
 

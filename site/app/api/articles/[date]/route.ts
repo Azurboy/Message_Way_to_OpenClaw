@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getArticlesByDate, getArticlesByTags } from "@/lib/content";
+import { logApiCall } from "@/lib/api-logger";
 
 export async function GET(
   request: NextRequest,
@@ -8,6 +9,7 @@ export async function GET(
   const { date } = await params;
   const data = getArticlesByDate(date);
   if (!data) {
+    logApiCall(request, `/api/articles/${date}`, "GET", 404, null);
     return NextResponse.json({ error: "Articles not found" }, { status: 404 });
   }
 
@@ -15,6 +17,7 @@ export async function GET(
   if (tagsParam) {
     const tags = tagsParam.split(",").map((t) => t.trim()).filter(Boolean);
     const filtered = getArticlesByTags(data, tags);
+    logApiCall(request, `/api/articles/${date}`, "GET", 200, null);
     return NextResponse.json({
       ...data,
       articles: filtered,
@@ -22,5 +25,6 @@ export async function GET(
     });
   }
 
+  logApiCall(request, `/api/articles/${date}`, "GET", 200, null);
   return NextResponse.json(data);
 }

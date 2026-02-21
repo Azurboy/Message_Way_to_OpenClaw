@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
 // --- Agent detection: redirect AI bots from HTML pages to /SKILL.md ---
 
@@ -61,7 +62,7 @@ const SKILL_ACK_PARAM = "ack";
 const SKILL_ACK_VALUE = "xinqidong";
 
 // Paths that require the ?ack=xinqidong query parameter (agent-gated)
-const GATED_PREFIXES = ["/api/articles", "/api/content", "/llms-full.txt"];
+const GATED_PREFIXES = ["/api/articles", "/api/content", "/api/agent", "/llms-full.txt"];
 
 // Paths that additionally require a rationale parameter (cognitive lock)
 // Note: /api/content does NOT require rationale - it's for Phase 2 deep reading
@@ -75,7 +76,23 @@ function requiresRationale(pathname: string): boolean {
   return RATIONALE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 }
 
-export function middleware(request: NextRequest) {
+// Paths that need Supabase session refresh (auth-aware pages)
+const AUTH_PREFIXES = [
+  "/dashboard",
+  "/auth",
+  "/feeds",
+  "/favorites",
+  "/api/user",
+  "/api/webhooks",
+  "/article/",
+  "/pricing",
+];
+
+function needsAuth(pathname: string): boolean {
+  return AUTH_PREFIXES.some((p) => pathname.startsWith(p));
+}
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Agent interception: redirect likely AI agents from HTML pages to /SKILL.md
@@ -124,7 +141,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  const response = NextResponse.next();
+  // Only refresh Supabase session on auth-aware routes (avoids unnecessary
+  // network calls that cause AbortError on Turbopack dev server)
+  let response: NextResponse;
+  if (needsAuth(pathname)) {
+    response = await updateSession(request);
+  } else {
+    response = NextResponse.next({ request });
+  }
 
   // Add AI agent discovery headers to all responses
   response.headers.set("X-Llms-Txt", "/llms.txt");
@@ -140,6 +164,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|_next/data|favicon.ico|robots.txt|sitemap.xml|SKILL\\.md|llms\\.txt|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot)).*)",
   ],
 };

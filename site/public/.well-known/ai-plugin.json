@@ -14,7 +14,8 @@
     "archive": "/api/archive",
     "feeds": "/api/feeds",
     "llms_txt": "/llms.txt",
-    "llms_full_txt": "/llms-full.txt"
+    "llms_full_txt": "/llms-full.txt",
+    "agent_feeds": "/api/agent/feeds"
   },
   "available_tags": [
     "AI", "LLM", "programming", "web", "security", "devops", "cloud",

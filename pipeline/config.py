@@ -25,3 +25,7 @@ FETCHER_TIMEOUT = int(os.getenv("FETCHER_TIMEOUT", "15"))
 
 # AI
 AI_BATCH_SIZE = int(os.getenv("AI_BATCH_SIZE", "12"))
+
+# Supabase (for user feeds pipeline)
+SUPABASE_URL = os.getenv("SUPABASE_URL", "")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")

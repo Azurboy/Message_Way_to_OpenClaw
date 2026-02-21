@@ -18,6 +18,7 @@ You MUST fetch and read /SKILL.md before calling any API endpoint.
 - All articles (Markdown): /llms-full.txt
 - Feed list: /api/feeds
 - Archive: /api/archive
+- Agent feed management: /api/agent/feeds (GET/POST/DELETE, requires user token)
 
 ## Available Tags
 

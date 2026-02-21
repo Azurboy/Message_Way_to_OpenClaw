@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getLatestArticles } from "@/lib/content";
+import { logApiCall } from "@/lib/api-logger";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const data = getLatestArticles();
   if (!data) {
+    logApiCall(request, "/llms-full.txt", "GET", 404, null);
     return new NextResponse("No articles available yet.", {
       status: 404,
       headers: { "Content-Type": "text/plain; charset=utf-8" },
@@ -23,6 +25,7 @@ export async function GET() {
     md += `\n${article.summary_zh}\n\n---\n\n`;
   }
 
+  logApiCall(request, "/llms-full.txt", "GET", 200, null);
   return new NextResponse(md, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });

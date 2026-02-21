@@ -47,7 +47,17 @@ async def main():
     # 4. Generate static content
     logger.info("Writing content files...")
     generate_content(articles_data, feeds)
-    logger.info("Done!")
+    logger.info("Done with global pipeline!")
+
+    # 5. Process user custom feeds (writes to Supabase, not static files)
+    try:
+        from pipeline.user_feeds import process_user_feeds
+        logger.info("Processing user custom feeds...")
+        process_user_feeds()
+        logger.info("User feeds done!")
+    except Exception as e:
+        logger.error(f"User feeds processing failed (non-fatal): {e}")
+
 
 
 if __name__ == "__main__":

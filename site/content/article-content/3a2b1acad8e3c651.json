@@ -1,0 +1,6 @@
+{
+  "id": "3a2b1acad8e3c651",
+  "title": "Quoting Thariq Shihipar",
+  "url": "https://simonwillison.net/2026/Feb/20/thariq-shihipar/#atom-everything",
+  "content": "<blockquote cite=\"https://twitter.com/trq212/status/2024574133011673516\"><p>Long running agentic products like Claude Code are made feasible by prompt caching which allows us to reuse computation from previous roundtrips and significantly decrease latency and cost. [...]</p>\n<p>At Claude Code, we build our entire harness around prompt caching. A high prompt cache hit rate decreases costs and helps us create more generous rate limits for our subscription plans, so we run alerts on our prompt cache hit rate and declare SEVs if they're too low.</p></blockquote>\n<p class=\"cite\">&mdash; <a href=\"https://twitter.com/trq212/status/2024574133011673516\">Thariq Shihipar</a></p>\n\n    <p>Tags: <a href=\"https://simonwillison.net/tags/prompt-engineering\">prompt-engineering</a>, <a href=\"https://simonwillison.net/tags/anthropic\">anthropic</a>, <a href=\"https://simonwillison.net/tags/claude-code\">claude-code</a>, <a href=\"https://simonwillison.net/tags/ai-agents\">ai-agents</a>, <a href=\"https://simonwillison.net/tags/generative-ai\">generative-ai</a>, <a href=\"https://simonwillison.net/tags/ai\">ai</a>, <a href=\"https://simonwillison.net/tags/llms\">llms</a></p>"
+}

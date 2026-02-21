@@ -1,0 +1,6 @@
+{
+  "id": "5a13fc1c4f406ea9",
+  "title": "Recovering lost code",
+  "url": "https://simonwillison.net/2026/Feb/19/recovering-lost-code/#atom-everything",
+  "content": "<p>Reached the stage of parallel agent psychosis where I've lost a whole feature - I know I had it yesterday, but I can't seem to find the branch or worktree or cloud instance or checkout with it in.</p>\n<p>... found it! Turns out I'd been hacking on a random prototype in <code>/tmp</code> and then my computer crashed and rebooted and I lost the code... but it's all still there in <code>~/.claude/projects/</code> session logs and Claude Code can extract it out and spin up the missing feature again.</p>\n\n    <p>Tags: <a href=\"https://simonwillison.net/tags/parallel-agents\">parallel-agents</a>, <a href=\"https://simonwillison.net/tags/coding-agents\">coding-agents</a>, <a href=\"https://simonwillison.net/tags/claude-code\">claude-code</a>, <a href=\"https://simonwillison.net/tags/generative-ai\">generative-ai</a>, <a href=\"https://simonwillison.net/tags/ai\">ai</a>, <a href=\"https://simonwillison.net/tags/llms\">llms</a></p>"
+}

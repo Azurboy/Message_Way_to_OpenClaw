@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
-import { getLatestArticles, getArticleContent, getArchiveIndex, getArticlesByDate } from "@/lib/content";
+import { getArchiveIndex, getArticleContent, getArticlesByDate } from "@/lib/content";
 import { ArticleReader } from "./ArticleReader";
+import { UserArticleFallback } from "./UserArticleFallback";
 
-export const dynamic = "force-static";
-export const revalidate = false;
+// Allow dynamic params (user articles not in static params will be rendered on demand)
+export const dynamicParams = true;
 
-// Generate static params for all articles
+// Generate static params for global articles
 export function generateStaticParams() {
   const archive = getArchiveIndex();
   const allIds: { id: string }[] = [];
@@ -29,7 +30,7 @@ interface PageProps {
 export default async function ArticlePage({ params }: PageProps) {
   const { id } = await params;
 
-  // Find article metadata from all dates
+  // Try to find in static content first
   const archive = getArchiveIndex();
   let articleMeta = null;
 
@@ -44,19 +45,19 @@ export default async function ArticlePage({ params }: PageProps) {
     }
   }
 
-  if (!articleMeta) {
-    notFound();
+  if (articleMeta) {
+    // Global article — serve from static content
+    const content = getArticleContent(id);
+    return (
+      <ArticleReader
+        article={{
+          ...articleMeta,
+          content: content?.content || "",
+        }}
+      />
+    );
   }
 
-  // Get full content
-  const content = getArticleContent(id);
-
-  return (
-    <ArticleReader
-      article={{
-        ...articleMeta,
-        content: content?.content || "",
-      }}
-    />
-  );
+  // Not a global article — render client component that fetches from Supabase
+  return <UserArticleFallback articleId={id} />;
 }

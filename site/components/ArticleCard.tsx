@@ -17,9 +17,10 @@ interface ArticleCardProps {
   article: Article;
   selectedTags?: string[];
   onTagClick?: (tag: string) => void;
+  isCustom?: boolean;
 }
 
-export function ArticleCard({ article, selectedTags = [], onTagClick }: ArticleCardProps) {
+export function ArticleCard({ article, selectedTags = [], onTagClick, isCustom }: ArticleCardProps) {
   const { isFavorite, addFavorite, removeFavorite, isLoaded } = useFavorites();
   const favorited = isFavorite(article.id);
 
@@ -50,6 +51,11 @@ export function ArticleCard({ article, selectedTags = [], onTagClick }: ArticleC
           <p className="text-sm text-gray-500 mt-1">
             {article.feed_title}
             {article.author && ` · ${article.author}`}
+            {isCustom && (
+              <span className="ml-2 px-1.5 py-0.5 text-xs bg-green-50 text-green-600 rounded">
+                自定义源
+              </span>
+            )}
           </p>
         </div>
         {isLoaded && (

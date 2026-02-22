@@ -1,7 +1,7 @@
 {
   "date": "2026-02-22",
-  "article_count": 24,
-  "tokens_used": 11691,
+  "article_count": 23,
+  "tokens_used": 11366,
   "ai_model": "deepseek-ai/DeepSeek-V3.2",
   "articles": [
     {
@@ -12,7 +12,7 @@
       "feed_title": "johndcook.com",
       "category": "Blogs",
       "published_at": "2026-02-22T01:00:31+00:00",
-      "summary_zh": "作者计算了第1000万个斐波那契数，并探讨了使用数学证书（如验证5f² ± 4是否为平方数）来快速验证计算结果正确性的方法。计算耗时150.3秒，而使用预计算的证书进行验证仅需3.3秒，显著提升了验证效率。",
+      "summary_zh": "作者计算了第1000万个斐波那契数，并讨论了使用证书（辅助数据）来快速验证计算结果正确性的方法。计算耗时150.3秒，而使用预计算的证书进行验证仅需3.3秒，显著提升了验证效率。",
       "tags": [
         "programming",
         "performance"
@@ -26,7 +26,7 @@
       "feed_title": "idiallo.com",
       "category": "Blogs",
       "published_at": "2026-02-21T23:35:48+00:00",
-      "summary_zh": "文章讨论了英伟达CEO黄仁勋关于投资OpenAI的言论反转，他澄清此前媒体报道的1000亿美元投资“从未是承诺”，而只是受邀投资。内容涉及AI公司间复杂的循环投资关系图以及相关的公开声明。",
+      "summary_zh": "文章讨论了英伟达CEO黄仁勋关于投资OpenAI的言论反转，他声称高达1000亿美元的投资“从未是承诺”，仅是受邀投资。这与之前OpenAI新闻稿中提到的投资意向形成对比，引发了关于AI公司间循环投资图的讨论。",
       "tags": [
         "AI",
         "business"
@@ -40,7 +40,7 @@
       "feed_title": "johndcook.com",
       "category": "Blogs",
       "published_at": "2026-02-21T18:13:13+00:00",
-      "summary_zh": "本文回顾了计算大斐波那契数的不同方法，重点介绍了能同时生成验证证书的Binet公式。虽然计算大斐波那契数本身可能没有直接实用价值，但其中涉及的高精度计算和验证技术可应用于其他实际问题。",
+      "summary_zh": "文章探讨了计算大斐波那契数的不同方法，重点介绍了Binet公式及其对高精度浮点运算的需求。作者指出，虽然计算大斐波那契数本身可能没有实际用途，但其中涉及的技术对其他实际问题具有借鉴意义。",
       "tags": [
         "programming",
         "performance"
@@ -54,7 +54,7 @@
       "feed_title": "construction-physics.com",
       "category": "Blogs",
       "published_at": "2026-02-21T13:37:44+00:00",
-      "summary_zh": "这是一篇博客的阅读列表或摘要文章，内容涉及广泛，但提供的片段主要是网页代码和图片占位符，没有明确的实质性技术内容摘要。",
+      "summary_zh": "这是一篇博客的阅读列表文章，通常包含多个技术文章的链接和简要介绍。由于提供的具体内容不完整，无法生成更详细的摘要。",
       "tags": [
         "culture"
       ]
@@ -67,7 +67,7 @@
       "feed_title": "shkspr.mobi",
       "category": "Blogs",
       "published_at": "2026-02-21T12:34:03+00:00",
-      "summary_zh": "作者在FOSDEM会议上做了一个关于OpenBenches项目的闪电演讲。由于官方视频有缺失，他利用自己的录音和他人拍摄的照片，使用Flowblade视频编辑器重新制作了演讲视频。",
+      "summary_zh": "作者在FOSDEM会议上做了一个关于OpenBenches开源项目的闪电演讲。由于现场录像部分丢失，他利用自己的录音和照片，使用Flowblade视频编辑器重新制作了演讲视频。",
       "tags": [
         "open-source",
         "tools"
@@ -81,7 +81,7 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-21T01:30:21+00:00",
-      "summary_zh": "文章引用了OpenAI的Thibault Sottiaux的推文，称GPT-5.3-Codex-Spark模型性能提升了约30%，现在每秒能处理超过1200个token。",
+      "summary_zh": "文章引用了OpenAI的Thibault Sottiaux的推文，宣布GPT-5.3-Codex-Spark模型的性能提升了约30%，现在每秒能处理超过1200个token。",
       "tags": [
         "AI",
         "LLM",
@@ -96,7 +96,7 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-21T00:37:45+00:00",
-      "summary_zh": "Andrej Karpathy发表了一篇关于“Claws”的迷你文章，讨论了购买Mac Mini并尝试运行各种Claw项目（如OpenClaw、NanoClaw）的体验。他认为Claws是在LLM智能体之上的一个新层，专注于编排、调度和持久化，是AI栈中一个令人兴奋的新发展方向。",
+      "summary_zh": "Andrej Karpathy发表了一篇关于“Claws”的迷你文章，认为这是在LLM智能体之上的一个新层，提升了编排、调度、上下文和工具调用能力。他提到了多个类似项目（如NanoClaw），并认为这是AI栈中一个令人兴奋的新层面。",
       "tags": [
         "AI",
         "LLM",
@@ -111,24 +111,10 @@
       "feed_title": "matklad.github.io",
       "category": "Blogs",
       "published_at": "2026-02-21T00:00:00+00:00",
-      "summary_zh": "作者探讨了代码注释的换行最佳实践，建议代码和注释应设置不同的换行列宽。代码通常以100列为限，而注释内容则应以更窄的宽度（如70列，相对于注释起始位置）换行，以提升可读性。",
+      "summary_zh": "作者讨论了代码注释的换行规范，建议代码和注释应设置不同的行宽限制（如代码100列，注释内容70列）。这是因为代码缩进会占用空间，而注释作为可读性文本，更窄的宽度有助于阅读。",
       "tags": [
         "programming",
         "design"
-      ]
-    },
-    {
-      "id": "e411464b8d98a840",
-      "title": "Track Zelda release anniversaries in your calendar",
-      "url": "https://evanhahn.com/zelda-anniversary-calendar/",
-      "author": "",
-      "feed_title": "evanhahn.com",
-      "category": "Blogs",
-      "published_at": "2026-02-21T00:00:00+00:00",
-      "summary_zh": "作者为纪念《塞尔达传说》系列游戏发布周年，创建了一个ICS日历文件。用户订阅该文件后，日历中就会显示每款《塞尔达》游戏的发售纪念日。文章还提供了一个用于生成该ICS文件的Python脚本链接。",
-      "tags": [
-        "programming",
-        "tools"
       ]
     },
     {
@@ -139,7 +125,7 @@
       "feed_title": "nesbitt.io",
       "category": "Blogs",
       "published_at": "2026-02-21T00:00:00+00:00",
-      "summary_zh": "文章借用“鲸落”的生态概念来比喻大型开源项目被遗弃后的状态。当一个流行项目停止维护后，其“遗骸”（代码库）会滋养出一个由分支、补丁和衍生项目构成的生态系统，持续多年，就像鲸鱼尸体在深海支持一系列生命阶段一样。",
+      "summary_zh": "文章借用“鲸落”的生态概念，比喻大型开源项目停止维护后，其依赖生态所经历的一系列阶段：被分叉、社区争夺资源、最终可能催生出新的替代项目。这揭示了开源项目生命周期和生态可持续性的问题。",
       "tags": [
         "open-source",
         "culture"
@@ -153,11 +139,11 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-20T23:47:10+00:00",
-      "summary_zh": "作者在自己的博客上新增了一个名为“beats”的功能，用于聚合展示他在其他平台的活动，包括开源项目发布、工具分享、今日所学、博物馆参观和研究动态等五种类型的内容，并以带徽章的小链接形式集成到博客的时间线中。",
+      "summary_zh": "作者在自己的博客上新增了一个名为“beats”的功能，用于聚合展示他在其他平台的活动，包括开源项目发布、工具推荐、今日所学、博物馆参观和研究动态等五种类型的内容。",
       "tags": [
-        "web",
         "open-source",
-        "tools"
+        "tools",
+        "culture"
       ]
     },
     {
@@ -168,9 +154,10 @@
       "feed_title": "joanwestenberg.com",
       "category": "Blogs",
       "published_at": "2026-02-20T22:54:49+00:00",
-      "summary_zh": "文章标题为“无法承受的冗余之重”，但提供的片段中没有任何具体内容，无法生成有效摘要。",
+      "summary_zh": "文章标题为“无法承受的遗留代码之重”，暗示将讨论软件系统中积累的陈旧、过时代码（cruft）所带来的维护负担和挑战。由于内容未提供，无法生成更具体的摘要。",
       "tags": [
-        "culture"
+        "programming",
+        "architecture"
       ]
     },
     {
@@ -181,7 +168,7 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-20T22:10:04+00:00",
-      "summary_zh": "加拿大硬件初创公司Taalas发布了其首款产品，一款定制化的Llama 3.1 8B模型硬件实现，能够以惊人的每秒17,000个令牌的速度运行。该产品采用激进的量化技术，结合了3位和6位参数。",
+      "summary_zh": "加拿大硬件初创公司Taalas宣布，其定制硬件能够以每秒17,000个token的惊人速度运行Llama 3.1 8B模型。他们采用了激进的量化技术（结合3位和6位参数），并计划在下一代产品中使用4位量化。",
       "tags": [
         "AI",
         "LLM",
@@ -197,7 +184,7 @@
       "feed_title": "krebsonsecurity.com",
       "category": "Blogs",
       "published_at": "2026-02-20T20:00:30+00:00",
-      "summary_zh": "文章介绍了一种名为“Starkiller”的新型钓鱼即服务。该服务通过巧妙伪装的链接加载目标品牌的真实登录页面，并充当受害者和合法网站之间的中继，窃取用户名、密码和多因素身份验证码。",
+      "summary_zh": "文章介绍了一种名为‘Starkiller’的新型钓鱼即服务。该服务通过代理技术加载目标品牌的真实登录页面，并作为中继窃取用户的用户名、密码和多因素认证码，从而绕过了传统静态钓鱼页面的缺陷。",
       "tags": [
         "security",
         "web"
@@ -211,7 +198,7 @@
       "feed_title": "wheresyoured.at",
       "category": "Blogs",
       "published_at": "2026-02-20T18:26:41+00:00",
-      "summary_zh": "文章以讽刺的口吻回顾了Anthropic公司的成立背景，其创始团队从OpenAI离职并宣称专注于AI安全和模型对齐。文章探讨了该公司在大型语言模型领域的发展理念和定位。",
+      "summary_zh": "文章以讽刺口吻介绍了Anthropic公司的成立背景，该公司由前OpenAI研究人员创立，宣称专注于构建更安全的大型语言模型。核心内容围绕其创始人离开OpenAI的原因——对模型扩展与安全对齐的强烈信念。",
       "tags": [
         "AI",
         "LLM",
@@ -226,7 +213,7 @@
       "feed_title": "filfre.net",
       "category": "Blogs",
       "published_at": "2026-02-20T17:24:46+00:00",
-      "summary_zh": "文章回顾了经典冒险游戏《狩魔猎人3：圣血与魔血》的开发历程和时代背景。探讨了在冒险游戏类型面临巨大市场阻力的情况下，该游戏得以诞生并取得成功的奇迹。",
+      "summary_zh": "文章回顾了经典冒险游戏《Gabriel Knight 3: Blood of the Sacred, Blood of the Damned》的开发背景与历史意义。作者认为该游戏在冒险游戏类型面临巨大阻力的情况下得以诞生并取得良好表现，堪称一个奇迹。",
       "tags": [
         "design",
         "culture"
@@ -240,12 +227,12 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-20T17:12:55+00:00",
-      "summary_zh": "ggml.ai项目（以llama.cpp闻名）宣布加入Hugging Face，以确保本地AI的长期发展。文章回顾了Georgi Gerganov通过llama.cpp项目，首次让本地LLM在消费级硬件上运行所带来的巨大影响。",
+      "summary_zh": "文章讨论了ggml.ai（llama.cpp项目）加入Hugging Face的消息，并回顾了该项目的历史意义。Georgi Gerganov开发的llama.cpp首次让大型语言模型能在消费级硬件上本地运行，极大地推动了本地AI的发展。",
       "tags": [
         "AI",
         "LLM",
         "open-source",
-        "tools"
+        "hardware"
       ]
     },
     {
@@ -256,7 +243,7 @@
       "feed_title": "devblogs.microsoft.com/oldnewthing",
       "category": "Blogs",
       "published_at": "2026-02-20T15:00:01+00:00",
-      "summary_zh": "这是微软开发者博客上一篇关于西雅图交响乐团2026/2027订阅季的预告文章。作者提到自己已经连续二十年制作这种季度的袖珍指南。",
+      "summary_zh": "文章是作者关于西雅图交响乐团2026/2027订阅季的简要指南。作者提到，这已是他连续二十年制作此类观演指南。",
       "tags": [
         "culture"
       ]
@@ -269,7 +256,7 @@
       "feed_title": "devblogs.microsoft.com/oldnewthing",
       "category": "Blogs",
       "published_at": "2026-02-20T15:00:00+00:00",
-      "summary_zh": "文章探讨了在对话框管理中如何区分通过按ESC键和点击关闭按钮来关闭对话框。作者分析了使用GetAsyncKeyState方法的潜在问题，并解释了系统同步和异步键盘状态的区别。",
+      "summary_zh": "文章探讨了在对话框管理中区分ESC键关闭和点击关闭按钮关闭的尝试。作者分析了使用GetAsyncKeyState检测ESC键状态的潜在问题，并解释了系统同步与异步键盘状态的区别。",
       "tags": [
         "programming",
         "tools"
@@ -283,7 +270,7 @@
       "feed_title": "pluralistic.net",
       "category": "Blogs",
       "published_at": "2026-02-20T14:53:08+00:00",
-      "summary_zh": "文章主要讨论了巴西如何通过“刺破公司面纱”等法律手段来遏制企业权力，限制公司的有限责任，以加强企业社会责任和问责制。",
+      "summary_zh": "文章主要讨论了巴西法律中“刺破公司面纱”的实践，即在一定条件下追究母公司对子公司行为的连带责任，以此作为遏制企业权力的一种方法。文中还提及了与此相关的其他话题链接。",
       "tags": [
         "business",
         "culture"
@@ -297,7 +284,7 @@
       "feed_title": "shkspr.mobi",
       "category": "Blogs",
       "published_at": "2026-02-20T12:34:57+00:00",
-      "summary_zh": "这是一篇关于John Cleese和Robin Skynner合著的《家庭与生存之道》的书评。书评认为这本书以苏格拉底式对话探讨家庭治疗，内容有趣但部分观点已过时，带有明显的时代局限性。",
+      "summary_zh": "文章评论了John Cleese和Robin Skynner合著的《Families And How To Survive Them》一书。该书以苏格拉底式对话探讨家庭治疗，观点有趣但部分内容（如对同性恋、跨性别者的看法）已显过时，且带有一定的男性视角局限。",
       "tags": [
         "culture"
       ]
@@ -310,7 +297,7 @@
       "feed_title": "dfarq.homeip.net",
       "category": "Blogs",
       "published_at": "2026-02-20T12:00:35+00:00",
-      "summary_zh": "文章纪念了十五年前（2010年2月20日）的一次技术趣事：加拿大个人电脑博物馆的策展人Syd Bolton让一台1982年最畅销的Commodore VIC-20电脑成功发送了推文。",
+      "summary_zh": "文章简短地回顾了2010年2月20日，一台Commodore VIC-20（1982年最畅销的电脑）首次成功发送推文的历史事件。",
       "tags": [
         "hardware",
         "culture"
@@ -324,7 +311,7 @@
       "feed_title": "idiallo.com",
       "category": "Blogs",
       "published_at": "2026-02-20T12:00:00+00:00",
-      "summary_zh": "文章讨论了“远程操作”常常被包装成“AI”并最终成为笑柄的现象。以亚马逊无人收银商店和特斯拉Optimus机器人酒吧为例，揭示了其背后可能依赖人力远程操作，而非真正的全自动人工智能。",
+      "summary_zh": "文章探讨了“远程人工操作”常被包装或误解为“人工智能”的现象，并因此成为笑柄。文中以亚马逊“Just Walk Out”无人商店和特斯拉Optimus机器人演示为例，指出其背后实际依赖大量人工远程操作或预编程，而非真正的自主AI。",
       "tags": [
         "AI",
         "business",
@@ -339,12 +326,11 @@
       "feed_title": "simonwillison.net",
       "category": "Blogs",
       "published_at": "2026-02-20T07:13:19+00:00",
-      "summary_zh": "文章引用了Thariq Shihipar关于提示缓存的论述。他指出，像Claude Code这样的长期运行智能体产品，其可行性依赖于提示缓存技术。该技术能重用先前交互的计算结果，显著降低延迟和成本。",
+      "summary_zh": "文章引用了Thariq Shihipar关于提示缓存的论述。他指出，在Claude Code等长期运行的智能体产品中，提示缓存通过复用先前轮次的计算，显著降低了延迟和成本，是实现产品可行性的关键技术。",
       "tags": [
         "AI",
         "LLM",
-        "performance",
-        "tools"
+        "performance"
       ]
     }
   ]

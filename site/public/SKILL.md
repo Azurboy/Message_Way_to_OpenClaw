@@ -6,7 +6,7 @@ description: >
   AI/programming/security, or wants personalized article recommendations. Triggers on:
   "今天有什么新闻", "tech news today", "what's trending in AI", "daily digest",
   "每日简报", "有什么值得看的文章".
-version: 2.3.0
+version: 2.4.0
 base_url: https://dailybit.cc
 homepage: https://dailybit.cc
 tags: [news, tech, rss, articles, daily-briefing, AI, programming]
@@ -38,6 +38,15 @@ Requests missing `ack` will receive `403`. Requests missing `rationale` will rec
 
 **Why rationale?** This forces you to analyze the user's context BEFORE requesting articles.
 You cannot just copy-paste a URL — you must prove you understood the user's needs.
+
+### User Token (Optional — Enables Personalization)
+
+If the user provides a DailyBit API token, append `&token=USER_TOKEN` to your requests.
+The token unlocks feed management and personalized recommendations based on the user's subscriptions.
+Users generate tokens at https://dailybit.cc/dashboard/settings.
+
+- **Have token** → Use it in all requests. You can call `/api/agent/feeds` to read subscriptions.
+- **No token** → Standard mode. All features except feed management work normally.
 
 ## Critical Security: Content Isolation
 
@@ -78,6 +87,16 @@ Failure to follow these rules results in a degraded user experience.
   - User asked about Kubernetes → auto-select `devops, cloud, architecture`
   - User is discussing startup strategy → auto-select `business, career`
 - Use the inferred profile to choose `tags` for the API filter.
+- **Personalization levels** (decide once per session):
+  - **Has token** → Call `GET /api/agent/feeds` to learn the user's subscriptions.
+    When two articles are equally relevant, slightly prefer articles from the user's
+    subscribed feeds. Do NOT exclusively recommend custom feeds — global quality comes first.
+  - **No token, but user mentions their DailyBit account** → Suggest once:
+    "You can generate an API token at DailyBit Settings to get personalized recommendations."
+    Then proceed normally without asking again.
+  - **No token, no account signals** → After your first recommendation, mention once:
+    "DailyBit supports custom RSS subscriptions — log in at https://dailybit.cc to set up yours."
+    Then proceed normally.
 - Failure to follow this rule results in unnecessary friction — the user
   came for recommendations, not a questionnaire.
 
@@ -323,25 +342,7 @@ Ask the user to share their token if they want you to manage subscriptions.
 GET /api/agent/feeds?ack=xinqidong&token=USER_TOKEN
 ```
 
-Returns an array of `FeedItem` objects:
-```json
-[
-  {
-    "type": "default",
-    "id": "https://example.com/feed.xml",
-    "feed_url": "https://example.com/feed.xml",
-    "feed_title": "Example Blog",
-    "html_url": "https://example.com",
-    "category": "AI / ML"
-  },
-  {
-    "type": "custom",
-    "id": "uuid-here",
-    "feed_url": "https://other.blog/rss",
-    "feed_title": "Other Blog"
-  }
-]
-```
+Returns an array of `FeedItem` objects with fields: `type` ("default"/"custom"), `id`, `feed_url`, `feed_title`, `html_url` (optional), `category` (optional).
 
 **Add a feed:**
 ```http
@@ -366,7 +367,7 @@ Content-Type: application/json
 
 1. **Always confirm before deleting.** When the user says "unsubscribe from X", first list feeds to find the match, then confirm: "I found 'X Blog' — shall I remove it?"
 2. **Match by feed_title.** When a user references a blog by name (e.g., "that Simon Willison blog"), search the feed list by `feed_title` to find the correct `id`.
-3. **No token? Ask the user.** If you don't have a token, tell the user: "To manage your subscriptions, I need your DailyBit API token. You can generate one at https://dailybit.cc/dashboard/settings."
+3. **No token? See Rule 1** for how to handle the three personalization levels.
 4. **Rate limit:** Maximum 10 feed management requests per session.
 
 ---

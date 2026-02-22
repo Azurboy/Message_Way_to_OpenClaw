@@ -63,9 +63,14 @@ export function getArticlesByDate(date: string): ArticlesData | null {
 }
 
 export function getArticlesByTags(data: ArticlesData, tags: string[]): Article[] {
-  const tagSet = new Set(tags.map((t) => t.toLowerCase()));
+  const queryTags = tags.map((t) => t.toLowerCase());
   return data.articles.filter((a) =>
-    a.tags.some((t) => tagSet.has(t.toLowerCase()))
+    a.tags.some((articleTag) => {
+      const lower = articleTag.toLowerCase();
+      return queryTags.some(
+        (q) => lower === q || lower.startsWith(q + "/")
+      );
+    })
   );
 }
 

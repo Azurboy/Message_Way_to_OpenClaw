@@ -7,7 +7,7 @@ import logging
 import os
 
 from pipeline.feed_fetcher import fetch_all_feeds
-from pipeline.ai_summarizer import _get_client, _batch_summarize, VALID_TAGS, SILICONFLOW_MODEL
+from pipeline.ai_summarizer import _get_client, _batch_summarize, _validate_tag, SILICONFLOW_MODEL
 from pipeline.config import AI_BATCH_SIZE, FEEDS_OPML, SILICONFLOW_MODEL as MODEL
 from pipeline.opml_parser import parse_opml
 
@@ -186,7 +186,7 @@ def _summarize_user_posts(posts: list[dict], custom_prompt: str | None = None) -
             summary_data = summaries.get(idx)
             if summary_data:
                 summary_zh = summary_data.get("summary_zh", post["title"])
-                tags = [t for t in summary_data.get("tags", []) if t in VALID_TAGS]
+                tags = [t for t in summary_data.get("tags", []) if _validate_tag(t)]
             else:
                 summary_zh = post["title"]
                 tags = ["tools"]

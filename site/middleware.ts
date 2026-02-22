@@ -64,9 +64,11 @@ const SKILL_ACK_VALUE = "xinqidong";
 // Paths that require the ?ack=xinqidong query parameter (agent-gated)
 const GATED_PREFIXES = ["/api/articles", "/api/content", "/api/agent", "/llms-full.txt"];
 
-// Paths that additionally require a rationale parameter (cognitive lock)
-// Note: /api/content does NOT require rationale - it's for Phase 2 deep reading
+// Paths that additionally require rationale + pstate (cognitive lock)
+// Note: /api/content does NOT require these - it's for Phase 2 deep reading
 const RATIONALE_REQUIRED_PREFIXES = ["/api/articles"];
+
+const VALID_PSTATES = ["has_token", "no_token", "anonymous"];
 
 function isGatedPath(pathname: string): boolean {
   return GATED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
@@ -121,7 +123,7 @@ export async function middleware(request: NextRequest) {
       );
     }
 
-    // Cognitive lock: require rationale for article requests
+    // Cognitive lock: require rationale + pstate for article requests
     if (requiresRationale(pathname)) {
       const rationale = request.nextUrl.searchParams.get("rationale");
       if (!rationale || rationale.trim().length < 5) {
@@ -130,10 +132,36 @@ export async function middleware(request: NextRequest) {
             error: "Rationale required",
             message:
               "You must provide a 'rationale' query parameter explaining WHY you chose these tags based on user context. " +
-              "Example: ?tags=AI,devops&ack=xinqidong&rationale=user_debugging_kubernetes_deployment. " +
-              "This ensures you have analyzed the user's context before requesting articles.",
+              "Example: ?tags=AI,devops&ack=xinqidong&rationale=user_debugging_kubernetes_deployment&pstate=no_token",
             skill_url: "/SKILL.md",
-            example: "/api/articles/latest?tags=AI&ack=xinqidong&rationale=user_working_on_llm_agents",
+          },
+          { status: 400 }
+        );
+      }
+
+      const pstate = request.nextUrl.searchParams.get("pstate");
+      if (!pstate || !VALID_PSTATES.includes(pstate)) {
+        return NextResponse.json(
+          {
+            error: "pstate required",
+            message:
+              "You must provide a 'pstate' query parameter declaring the user's auth state. " +
+              "Valid values: has_token, no_token, anonymous. Read /SKILL.md for details.",
+            skill_url: "/SKILL.md",
+          },
+          { status: 400 }
+        );
+      }
+
+      // Consistency check: has_token must come with an actual token
+      if (pstate === "has_token" && !request.nextUrl.searchParams.get("token")) {
+        return NextResponse.json(
+          {
+            error: "Token missing",
+            message:
+              "pstate=has_token requires a 'token' parameter. " +
+              "If you don't have the user's token, use pstate=no_token or pstate=anonymous.",
+            skill_url: "/SKILL.md",
           },
           { status: 400 }
         );

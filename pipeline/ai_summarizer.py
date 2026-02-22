@@ -11,8 +11,8 @@ from pipeline.config import SILICONFLOW_API_KEY, SILICONFLOW_MODEL, AI_BATCH_SIZ
 
 logger = logging.getLogger(__name__)
 
-VALID_TAGS = [
-    "AI", "LLM", "programming", "web", "security", "devops", "cloud",
+VALID_TOP_TAGS = [
+    "AI", "programming", "web", "security", "devops", "cloud",
     "open-source", "design", "business", "career", "hardware", "mobile",
     "database", "networking", "performance", "testing", "architecture",
     "tools", "culture",
@@ -22,14 +22,29 @@ BATCH_PROMPT_TEMPLATE = """请为以下 {count} 篇技术文章生成中文摘�
 
 要求：
 - summary_zh: 2-3句中文摘要，概括文章核心内容
-- tags: 2-5个标签，必须从以下词表中选择：
-  {tags}
+- tags: 2-5个层级标签，用 / 分隔子类，最多3层
+
+顶级分类：{tags}
+
+常见子标签示例（可自由扩展，但顶级分类必须从上面选）：
+  AI/LLM, AI/LLM/Agent, AI/LLM/RAG, AI/LLM/Fine-tuning, AI/Vision, AI/ML,
+  programming/Python, programming/Rust, programming/Go, programming/JavaScript, programming/TypeScript,
+  web/Frontend, web/Backend, web/API,
+  security/Web, security/Crypto, security/Privacy,
+  devops/Kubernetes, devops/Docker, devops/CI-CD,
+  cloud/AWS, cloud/GCP, cloud/Azure,
+  architecture/Distributed, architecture/Microservices
+
+规则：
+- 每篇文章至少包含1个顶级标签（如 "AI"）和1个更具体的子标签（如 "AI/LLM"）
+- 如果文章主题非常具体，可以用到第3层（如 "AI/LLM/Agent"）
+- 不要生造不合理的层级，宁可停在第2层
 
 文章列表：
 {articles}
 
 请以JSON格式回复，不要包含其他内容：
-{{"articles": [{{"index": 1, "summary_zh": "...", "tags": ["AI", "LLM"]}}]}}"""
+{{"articles": [{{"index": 1, "summary_zh": "...", "tags": ["AI", "AI/LLM/Agent"]}}]}}"""
 
 
 def _get_client() -> OpenAI:
@@ -39,6 +54,12 @@ def _get_client() -> OpenAI:
         api_key=SILICONFLOW_API_KEY,
         base_url="https://api.siliconflow.cn/v1",
     )
+
+
+def _validate_tag(tag: str) -> bool:
+    """Check that a tag's top-level segment is a valid category."""
+    top = tag.split("/")[0]
+    return top in VALID_TOP_TAGS
 
 
 def _make_article_id(url: str) -> str:
@@ -103,7 +124,7 @@ def summarize_articles(posts: list[dict]) -> dict:
             summary_data = summaries.get(idx, None)
             if summary_data:
                 summary_zh = summary_data.get("summary_zh", post["title"])
-                tags = [t for t in summary_data.get("tags", []) if t in VALID_TAGS]
+                tags = [t for t in summary_data.get("tags", []) if _validate_tag(t)]
             else:
                 # Fallback: use title as summary, category as tag
                 summary_zh = post["title"]
@@ -134,17 +155,17 @@ def summarize_articles(posts: list[dict]) -> dict:
 
 
 def _category_to_tags(category: str) -> list[str]:
-    """Map OPML category to valid tags as fallback."""
+    """Map OPML category to hierarchical tags as fallback."""
     cat_lower = category.lower()
     tags = []
     mapping = {
-        "ai": "AI", "ml": "AI", "machine learning": "AI",
-        "llm": "LLM", "language model": "LLM",
+        "ai": "AI", "ml": "AI/ML", "machine learning": "AI/ML",
+        "llm": "AI/LLM", "language model": "AI/LLM",
         "programming": "programming", "dev": "programming", "code": "programming",
-        "web": "web", "frontend": "web", "backend": "web",
+        "web": "web", "frontend": "web/Frontend", "backend": "web/Backend",
         "security": "security", "infosec": "security",
         "devops": "devops", "ops": "devops", "sre": "devops",
-        "cloud": "cloud", "aws": "cloud", "gcp": "cloud", "azure": "cloud",
+        "cloud": "cloud", "aws": "cloud/AWS", "gcp": "cloud/GCP", "azure": "cloud/Azure",
         "open source": "open-source", "oss": "open-source",
         "design": "design", "ux": "design", "ui": "design",
         "business": "business", "startup": "business",
@@ -179,7 +200,7 @@ def _batch_summarize(client: OpenAI, batch: list[dict], custom_prompt: str | Non
 
     prompt = BATCH_PROMPT_TEMPLATE.format(
         count=len(batch),
-        tags=", ".join(VALID_TAGS),
+        tags=", ".join(VALID_TOP_TAGS),
         articles=article_text,
     )
 

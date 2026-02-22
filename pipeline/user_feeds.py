@@ -53,7 +53,7 @@ def _get_global_feed_urls() -> set[str]:
     return {f["xml_url"].rstrip("/").lower() for f in feeds}
 
 
-def process_user_feeds():
+async def process_user_feeds():
     """Main entry: fetch user feeds from Supabase, process, write results back."""
     sb = _get_supabase_client()
     if sb is None:
@@ -82,12 +82,12 @@ def process_user_feeds():
 
     for user_id, feeds in user_feeds.items():
         try:
-            _process_user(sb, user_id, feeds, global_urls)
+            await _process_user(sb, user_id, feeds, global_urls)
         except Exception as e:
             logger.error(f"Failed processing user {user_id}: {e}")
 
 
-def _process_user(sb, user_id: str, feeds: list[dict], global_urls: set[str]):
+async def _process_user(sb, user_id: str, feeds: list[dict], global_urls: set[str]):
     """Process one user's custom feeds."""
     # Separate: feeds already in global set vs unique user feeds
     unique_feeds = []
@@ -108,7 +108,7 @@ def _process_user(sb, user_id: str, feeds: list[dict], global_urls: set[str]):
     logger.info(f"User {user_id[:8]}...: fetching {len(unique_feeds)} unique feeds")
 
     # Fetch
-    posts = asyncio.run(fetch_all_feeds(unique_feeds))
+    posts = await fetch_all_feeds(unique_feeds)
     if not posts:
         logger.info(f"User {user_id[:8]}...: no posts fetched")
         return

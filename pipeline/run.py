@@ -53,7 +53,7 @@ async def main():
     try:
         from pipeline.user_feeds import process_user_feeds
         logger.info("Processing user custom feeds...")
-        process_user_feeds()
+        await process_user_feeds()
         logger.info("User feeds done!")
     except Exception as e:
         logger.error(f"User feeds processing failed (non-fatal): {e}")

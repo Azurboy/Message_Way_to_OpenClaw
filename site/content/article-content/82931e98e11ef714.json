@@ -1,0 +1,6 @@
+{
+  "id": "82931e98e11ef714",
+  "title": "OpenBenches at FOSDEM",
+  "url": "https://shkspr.mobi/blog/2026/02/openbenches-at-fosdem/",
+  "content": "<p>At the recent FOSDEM, I did a very <a href=\"https://fosdem.org/2026/schedule/event/TFFDM8-openbenches/\">quick lightning talk about our OpenBenches project</a>.</p>\n\n<p>Sadly, despite the best efforts of the AV team, the video had a missing section. I took my own audio recording and <a href=\"https://gts.solfood.be/@zipkid\">zipkid</a> took some photos, so I was able to recreate it using the <a href=\"https://github.com/jliljebl/flowblade\">Flowblade video editor</a>.</p>\n\n<p>Enjoy!</p>\n\n\n\n<p>Many thanks to <a href=\"https://edwardbetts.com/\">Edward Betts</a> for running the dev room and providing the display laptop.</p>"
+}

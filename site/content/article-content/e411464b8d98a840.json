@@ -1,0 +1,6 @@
+{
+  "id": "e411464b8d98a840",
+  "title": "Track Zelda release anniversaries in your calendar",
+  "url": "https://evanhahn.com/zelda-anniversary-calendar/",
+  "content": "<p>The original <em>Legend of Zelda</em> came out 40 years ago today. With other birthdays on the horizon, like <em>Twilight Princess</em>&rsquo;s 20th in November, I wanted a calendar that showed the anniversary of every <em>Zelda</em> game. So I made one.</p>\n<p>Subscribe to this URL in your calendar app:</p>\n<pre><code>https://evanhahn.com/tape/zelda_anniversaries.ics\n</code></pre>\n<p>Once you do, you&rsquo;ll get calendar events on the anniversary of each game&rsquo;s release. For example, you&rsquo;ll be able to see that the <em>Oracle</em> games turn 25 in less than a week&hellip;I feel old.</p>\n<p>If you want to build this file yourself, <a href=\"./script.py.txt\">I wrote a little Python script that generates an ICS file from a CSV of release dates</a>.</p>"
+}

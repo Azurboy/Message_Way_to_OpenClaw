@@ -68,6 +68,17 @@ export default function AboutPage() {
         <p>
           作者：Ube · 关注公众号「Ube在building」获取更多内容
         </p>
+
+        <h2 className="text-xl font-semibold mt-8 mb-3">联系我们</h2>
+        <p>
+          如有问题、建议或合作意向，欢迎联系：
+          <a
+            href="mailto:yinbiayasa@gmail.com"
+            className="text-blue-600 hover:underline ml-1"
+          >
+            yinbiayasa@gmail.com
+          </a>
+        </p>
       </div>
     </div>
   );

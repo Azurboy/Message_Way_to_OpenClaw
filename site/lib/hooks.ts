@@ -65,8 +65,12 @@ function useSupabaseUser() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      cachedUser = session?.user ?? null;
-      listeners.forEach((fn) => fn(cachedUser!));
+      const newUser = session?.user ?? null;
+      // Only notify if user actually changed (avoid infinite re-render loops)
+      if (newUser?.id !== cachedUser?.id) {
+        cachedUser = newUser;
+        listeners.forEach((fn) => fn(cachedUser!));
+      }
     });
 
     return () => {
@@ -176,14 +180,14 @@ export function useFavorites() {
     return () => {
       cancelled = true;
     };
-  }, [user, authReady]);
+  }, [user?.id, authReady]);
 
   // Save to localStorage when not logged in
   useEffect(() => {
     if (isLoaded && !user) {
       localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
     }
-  }, [favorites, isLoaded, user]);
+  }, [favorites, isLoaded, user?.id]);
 
   const addFavorite = useCallback(
     (article: Omit<FavoriteArticle, "savedAt">) => {

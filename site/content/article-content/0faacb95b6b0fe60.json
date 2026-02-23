@@ -1,0 +1,6 @@
+{
+  "id": "0faacb95b6b0fe60",
+  "title": "Which web frameworks are most token-efficient for AI agents?",
+  "url": "https://martinalderson.com/posts/which-web-frameworks-are-most-token-efficient-for-ai-agents/?utm_source=rss",
+  "content": "I benchmarked 19 web frameworks on how efficiently an AI coding agent can build and extend the same app. Minimal frameworks cost up to 2.9x fewer tokens than full-featured ones."
+}

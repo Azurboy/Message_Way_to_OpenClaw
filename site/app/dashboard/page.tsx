@@ -15,7 +15,6 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [feedCount, setFeedCount] = useState(0);
-  const [articleCount, setArticleCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,15 +40,10 @@ export default function DashboardPage() {
           .from("user_feeds")
           .select("id", { count: "exact", head: true })
           .eq("user_id", data.user.id),
-        supabase
-          .from("user_articles")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", data.user.id),
-      ]).then(([profileRes, feedsRes, articlesRes]) => {
+      ]).then(([profileRes, feedsRes]) => {
         if (cancelled) return;
         if (profileRes.data) setProfile(profileRes.data);
         setFeedCount(feedsRes.count ?? 0);
-        setArticleCount(articlesRes.count ?? 0);
         setLoading(false);
       }).catch(() => {});
     }).catch(() => {});
@@ -85,16 +79,11 @@ export default function DashboardPage() {
         </span>
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
         <DashCard
           label="订阅源"
           value={feedCount}
           href="/feeds"
-        />
-        <DashCard
-          label="我的文章"
-          value={articleCount}
-          href="/dashboard/articles"
         />
         <DashCard label="云端收藏" value="—" href="/favorites" />
         <DashCard

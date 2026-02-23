@@ -15,11 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <head>
-        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt - AI Agent Discovery" />
-        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full articles in Markdown" />
         <link rel="alternate" type="text/markdown" href="/SKILL.md" title="OpenClaw Skill Definition" />
-        <link rel="alternate" type="application/json" href="/.well-known/ai-plugin.json" title="AI Plugin Manifest" />
-        <link rel="alternate" type="application/json" href="/api/articles/latest" title="Latest Articles JSON API" />
       </head>
       <body className="bg-gray-50 text-gray-900 min-h-screen">
         <nav className="border-b border-gray-200 bg-white">
@@ -42,7 +38,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t border-gray-200 mt-16">
           <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
             DailyBit - AI 驱动的每日技术摘要 ·{" "}
-            <Link href="/llms.txt" className="underline">llms.txt</Link> ·{" "}
             <Link href="/SKILL.md" className="underline">OpenClaw Skill</Link>
           </div>
         </footer>

@@ -51,10 +51,9 @@ export default function AboutPage() {
         <p>本站专为 AI Agent 设计了访问接口：</p>
         <ul className="list-disc list-inside space-y-1 mt-2">
           <li><code className="bg-gray-100 px-1 rounded">/SKILL.md</code> - OpenClaw Skill 定义（Agent 必读）</li>
-          <li><code className="bg-gray-100 px-1 rounded">/llms.txt</code> - Agent 发现文件</li>
+          <li><code className="bg-gray-100 px-1 rounded">/api/tags</code> - 动态标签发现</li>
           <li><code className="bg-gray-100 px-1 rounded">/api/articles/latest</code> - 文章列表 JSON API</li>
-          <li><code className="bg-gray-100 px-1 rounded">/api/content/&#123;id&#125;</code> - 单篇文章全文</li>
-          <li><code className="bg-gray-100 px-1 rounded">/api/articles/latest?tags=AI,LLM</code> - 按标签过滤</li>
+          <li><code className="bg-gray-100 px-1 rounded">/api/content?ids=id1,id2</code> - 批量文章全文</li>
         </ul>
 
         <h2 className="text-xl font-semibold mt-8 mb-3">技术栈</h2>

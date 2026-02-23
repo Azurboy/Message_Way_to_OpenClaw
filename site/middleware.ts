@@ -117,7 +117,6 @@ export async function middleware(request: NextRequest) {
             "You must read /SKILL.md first. All API requests require the query parameter ?ack=<passphrase>. " +
             "The passphrase is documented in /SKILL.md. Fetch /SKILL.md to learn the access method and mandatory behavioral rules.",
           skill_url: "/SKILL.md",
-          llms_txt: "/llms.txt",
         },
         { status: 403 }
       );
@@ -179,8 +178,6 @@ export async function middleware(request: NextRequest) {
   }
 
   // Add AI agent discovery headers to all responses
-  response.headers.set("X-Llms-Txt", "/llms.txt");
-  response.headers.set("X-AI-Plugin", "/.well-known/ai-plugin.json");
   response.headers.set("X-Skill", "/SKILL.md");
   response.headers.append(
     "Link",

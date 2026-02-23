@@ -11,16 +11,10 @@
     "articles_by_date": "/api/articles/{date}",
     "articles_filtered": "/api/articles/latest?tags={tags}",
     "article_content": "/api/content/{id}",
+    "article_content_batch": "/api/content?ids={id1,id2,id3}",
+    "tags": "/api/tags",
     "archive": "/api/archive",
     "feeds": "/api/feeds",
-    "llms_txt": "/llms.txt",
-    "llms_full_txt": "/llms-full.txt",
     "agent_feeds": "/api/agent/feeds"
-  },
-  "available_tags": [
-    "AI", "LLM", "programming", "web", "security", "devops", "cloud",
-    "open-source", "design", "business", "career", "hardware", "mobile",
-    "database", "networking", "performance", "testing", "architecture",
-    "tools", "culture"
-  ]
+  }
 }

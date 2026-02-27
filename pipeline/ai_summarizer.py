@@ -11,6 +11,35 @@ from pipeline.config import SILICONFLOW_API_KEY, SILICONFLOW_MODEL, AI_BATCH_SIZ
 
 logger = logging.getLogger(__name__)
 
+# Default subtag examples used when no previous data exists
+DEFAULT_SUBTAGS = [
+    "AI/LLM", "AI/LLM/Agent", "AI/LLM/RAG", "AI/LLM/Fine-tuning", "AI/Vision", "AI/ML",
+    "programming/Python", "programming/Rust", "programming/Go", "programming/JavaScript", "programming/TypeScript",
+    "web/Frontend", "web/Backend", "web/API",
+    "security/Web", "security/Crypto", "security/Privacy",
+    "devops/Kubernetes", "devops/Docker", "devops/CI-CD",
+    "cloud/AWS", "cloud/GCP", "cloud/Azure",
+    "architecture/Distributed", "architecture/Microservices",
+]
+
+
+def _load_existing_tags() -> list[str]:
+    """Load all unique tags from the latest articles JSON to guide tag reuse."""
+    try:
+        from pathlib import Path
+        latest = Path("site/content/articles/latest.json")
+        if not latest.exists():
+            return DEFAULT_SUBTAGS
+        data = json.loads(latest.read_text())
+        tags = set()
+        for article in data.get("articles", []):
+            for tag in article.get("tags", []):
+                if "/" in tag:  # only subtags
+                    tags.add(tag)
+        return sorted(tags) if tags else DEFAULT_SUBTAGS
+    except Exception:
+        return DEFAULT_SUBTAGS
+
 VALID_TOP_TAGS = [
     "AI", "programming", "web", "security", "devops", "cloud",
     "open-source", "design", "business", "career", "hardware", "mobile",
@@ -26,19 +55,14 @@ BATCH_PROMPT_TEMPLATE = """请为以下 {count} 篇技术文章生成中文摘�
 
 顶级分类：{tags}
 
-常见子标签示例（可自由扩展，但顶级分类必须从上面选）：
-  AI/LLM, AI/LLM/Agent, AI/LLM/RAG, AI/LLM/Fine-tuning, AI/Vision, AI/ML,
-  programming/Python, programming/Rust, programming/Go, programming/JavaScript, programming/TypeScript,
-  web/Frontend, web/Backend, web/API,
-  security/Web, security/Crypto, security/Privacy,
-  devops/Kubernetes, devops/Docker, devops/CI-CD,
-  cloud/AWS, cloud/GCP, cloud/Azure,
-  architecture/Distributed, architecture/Microservices
+已有子标签（优先使用，仅当文章主题明确不属于任何已有子标签时才创建新子标签）：
+  {existing_tags}
 
 规则：
 - 每篇文章至少包含1个顶级标签（如 "AI"）和1个更具体的子标签（如 "AI/LLM"）
 - 如果文章主题非常具体，可以用到第3层（如 "AI/LLM/Agent"）
 - 不要生造不合理的层级，宁可停在第2层
+- 优先从上面的已有子标签中选择，保持标签一致性
 
 文章列表：
 {articles}
@@ -198,9 +222,11 @@ def _batch_summarize(client: OpenAI, batch: list[dict], custom_prompt: str | Non
             f"内容: {content_snippet}\n"
         )
 
+    existing_tags = _load_existing_tags()
     prompt = BATCH_PROMPT_TEMPLATE.format(
         count=len(batch),
         tags=", ".join(VALID_TOP_TAGS),
+        existing_tags=", ".join(existing_tags),
         articles=article_text,
     )
 

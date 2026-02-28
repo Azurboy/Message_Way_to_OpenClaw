@@ -1,0 +1,6 @@
+{
+  "id": "6e3c13e2bcafb55c",
+  "title": "Upgrading my Open Source Pi Surveillance Server with Frigate",
+  "url": "https://www.jeffgeerling.com/blog/2026/upgrading-my-open-source-pi-surveillance-server-frigate/",
+  "content": "<p>In 2024 I built a <a href=\"https://www.jeffgeerling.com/blog/2024/building-pi-frigate-nvr-axzezs-interceptor-1u-case/\">Pi Frigate NVR with Axzez's Interceptor 1U Case</a>, and installed it in my 19&quot; rack. Using a Coral TPU for object detection, it's been dutifully surveilling my property—on <em>my</em> terms (100% local, no cloud integration or account required).</p>\n<figure class=\"insert-image\"><img alt=\"Exaviz Cruiser CM5 carrier board inside DeskPi mini rack enclosure with Annke 4K camera on top\" height=\"auto\" src=\"https://www.jeffgeerling.com/blog/2026/upgrading-my-open-source-pi-surveillance-server-frigate/exaviz-cruiser-mini-rack-enclosure-with-annke-camera.jpeg\" width=\"700\" />\n</figure>\n\n<p>I've wanted to downsize the setup while keeping <del>cheap</del> large hard drives<sup id=\"fnref:1\"><a class=\"footnote-ref\" href=\"#fn:1\">1</a></sup>, and an AI accelerator.</p>"
+}

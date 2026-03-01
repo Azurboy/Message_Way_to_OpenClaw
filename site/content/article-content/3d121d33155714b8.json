@@ -1,0 +1,6 @@
+{
+  "id": "3d121d33155714b8",
+  "title": "LLM Use in the Python Source Code",
+  "url": "https://blog.miguelgrinberg.com/post/llm-use-in-the-python-source-code",
+  "content": "<p>There is a trick that is spreading through social media. If you block the <a href=\"https://github.com/claude\">claude</a> user on GitHub, then each time you visit a GitHub repository that has commits by this user you get a banner at the top alerting you of the user's participation. It's an easy way to spot projects that have started to rely on coding agents, in this case on Claude Code specifically.</p>\n<p>Imagine the surprise when you see that <a href=\"https://github.com/python/cpython\">CPython</a>, one of the most popular open-source projects in the world, is now receiving contributions from <code>claude</code>:</p>\n<p><img alt=\"CPython project on GitHub showing that claude contributes to it\" src=\"/static/images/python-and-claude.jpg\" /></p>"
+}

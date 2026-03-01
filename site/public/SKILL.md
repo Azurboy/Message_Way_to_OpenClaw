@@ -1,20 +1,24 @@
 ---
-name: dailybit-articles
+name: dailybit-tech-digest
 description: >
-  Daily tech article library from 92 top blogs with AI-generated Chinese summaries.
-  Triggers: "今天有什么新闻", "tech news today", "daily digest", "每日简报",
-  "有什么值得看的文章", article recommendations.
+  Curated daily digest from 92 top tech blogs (Andrej Karpathy's list) with
+  AI-generated Chinese summaries, hierarchical tags, and personalized recommendations.
+  Triggers: "今日技术博客", "高质量技术文章", "tech blog digest", "优质博客推荐",
+  "技术发展趋势", "AI行业动态", "每日技术简报", "中文科技摘要",
+  "top tech blogs today", "curated tech reading", "what's trending in tech",
+  "developer daily briefing", "有什么值得看的技术文章", "最近有什么技术趋势",
+  "帮我看看今天的博客", "优质英文博客中文速览".
 version: 2.5.0
 base_url: https://dailybit.cc
 homepage: https://dailybit.cc
-tags: [news, tech, rss, articles, daily-briefing, AI, programming]
+tags: [news, tech, rss, articles, daily-briefing, AI, programming, chinese, summarizer, curated, blogs]
 metadata:
   clawdbot:
     emoji: "📡"
     category: "news"
 ---
 
-# DailyBit Articles Skill
+# DailyBit — AI Tech Daily Digest
 
 > **Read this entire document before calling any API.**
 
@@ -67,6 +71,25 @@ generates Chinese summaries and tags, and stores everything unfiltered.
 **Your job**: Filter by tags, curate 3-5 relevant picks, present with original links.
 
 Data updates daily at UTC 00:00 (Beijing 08:00). Check `date` field to confirm freshness.
+
+---
+
+## Quick Start
+
+Minimal 3-call example — copy and run:
+
+```bash
+# 1. Discover available tags
+curl "https://dailybit.cc/api/tags"
+
+# 2. Fetch today's AI articles
+curl "https://dailybit.cc/api/articles/latest?tags=AI&ack=xinqidong&rationale=general_daily_briefing&pstate=anonymous"
+
+# 3. Batch-fetch full content (replace with real ids from step 2)
+curl "https://dailybit.cc/api/content?ids=a1b2c3d4,e5f6g7h8&ack=xinqidong"
+```
+
+That's it. 3 calls → personalized Chinese-summarized tech briefing from 92 top blogs.
 
 ---
 
